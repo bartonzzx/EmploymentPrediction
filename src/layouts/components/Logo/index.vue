@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import useSettingsStore from '@/store/modules/settings'
-import imgLogo from '@/assets/images/logo.png'
+import imgLogo from '@/assets/images/site_logo.png'
 
 defineOptions({
   name: 'Logo',

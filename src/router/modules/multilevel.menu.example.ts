@@ -62,6 +62,14 @@ const routes: RouteRecordRaw = {
                 title: '导航2-2-2',
               },
             },
+            {
+              path: 'level3.test',
+              name: 'MultilevelMenuExampleLevel2Level3Level3Test',
+              component: () => import('@/views/multilevel_menu_example/level2/level3/level3.test.vue'),
+              meta: {
+                title: '导航2-2-3',
+              },
+            },
           ],
         },
       ],

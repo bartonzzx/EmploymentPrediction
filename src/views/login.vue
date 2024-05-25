@@ -23,7 +23,7 @@ const settingsStore = useSettingsStore()
 const userStore = useUserStore()
 
 const banner = new URL('../assets/images/login-banner.png', import.meta.url).href
-const logo = new URL('../assets/images/logo.png', import.meta.url).href
+const logo = new URL('../assets/images/site_logo.png', import.meta.url).href
 const title = import.meta.env.VITE_APP_TITLE
 
 // 登录方式，default 账号密码登录，qrcode 扫码登录
