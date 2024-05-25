@@ -11,7 +11,7 @@ const routes: RouteRecordRaw = {
   name: 'course',
   meta: {
     title: '课程管理',
-    icon: 'i-ic:round-tab',
+    icon: 'bxs:book-content',
   },
   children: [
     {

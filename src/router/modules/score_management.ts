@@ -11,7 +11,7 @@ const routes: RouteRecordRaw = {
   name: 'score',
   meta: {
     title: '成绩管理',
-    icon: 'i-ic:round-tab',
+    icon: 'heroicons-outline:academic-cap',
   },
   children: [
     {

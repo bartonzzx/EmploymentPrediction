@@ -11,7 +11,7 @@ const routes: RouteRecordRaw = {
   name: 'index',
   meta: {
     title: '就业管理',
-    icon: 'i-heroicons-solid:menu-alt-3',
+    icon: 'ep:avatar',
   },
   children: [
     {
@@ -21,6 +21,7 @@ const routes: RouteRecordRaw = {
       meta: {
         title: '简介',
         activeMenu: '/employment_management',
+        icon: 'line-md:text-box-to-text-box-multiple-transition',
       },
     },
     {
@@ -30,6 +31,7 @@ const routes: RouteRecordRaw = {
       meta: {
         title: '就业能力评估',
         activeMenu: '/employment_management',
+        icon: 'line-md:speedometer-loop',
       },
     },
     {
@@ -39,6 +41,7 @@ const routes: RouteRecordRaw = {
       meta: {
         title: '就业去向预测',
         activeMenu: '/employment_management',
+        icon: 'line-md:uploading-loop',
       },
     },
     {
@@ -48,6 +51,7 @@ const routes: RouteRecordRaw = {
       meta: {
         title: '实时评估和预测',
         activeMenu: '/employment_management',
+        icon: 'line-md:loading-loop',
       },
     },
   ],
