@@ -1,18 +1,18 @@
 <route lang="yaml">
 meta:
-  title: 页面标题
+  title: 能力评估
 </route>
 
 <script setup lang="ts">
 defineOptions({
-  name: 'MultilevelMenuExampleLevel2Level3Level3Test',
+  name: 'EmploymentManagementAbilityEvaluationAbility',
 })
 </script>
 
 <template>
   <div>
     <!-- 布局 -->
-    <p>this is a test page from plop</p>
+    <p>ability.vue</p>
   </div>
 </template>
 

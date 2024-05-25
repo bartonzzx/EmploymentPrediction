@@ -11,10 +11,20 @@ export default defineFakeRoute([
         data: [
           {
             meta: {
-              title: '演示',
+              title: '主导航',
               icon: 'uim:box',
             },
             children: [
+              {
+                path: '/course_management',
+                component: '/course_management/course.vue',
+                redirect: '/course_management/course',
+                name: 'course',
+                meta: {
+                  title: '课程管理',
+                  icon: 'heroicons-solid:menu-alt-3',
+                },
+              },
               {
                 path: '/multilevel_menu_example',
                 component: 'Layout',
@@ -71,14 +81,6 @@ export default defineFakeRoute([
                             component: 'multilevel_menu_example/level2/level3/page2.vue',
                             meta: {
                               title: '导航2-2-2',
-                            },
-                          },
-                          {
-                            path: 'level3.test',
-                            name: 'MultilevelMenuExampleLevel2Level3Level3Test',
-                            component: 'multilevel_menu_example/level2/level3/level3.test.vue',
-                            meta: {
-                              title: '导航2-2-3',
                             },
                           },
                         ],

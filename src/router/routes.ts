@@ -1,7 +1,9 @@
 import { setupLayouts } from 'virtual:meta-layouts'
 import generatedRoutes from 'virtual:generated-pages'
 import type { RouteRecordRaw } from 'vue-router'
-import MultilevelMenuExample from './modules/multilevel.menu.example'
+import course_management from './modules/course_management'
+import score_management from './modules/score_management'
+import employment_management from './modules/employment_management'
 import type { Route } from '#/global'
 import useSettingsStore from '@/store/modules/settings'
 
@@ -61,11 +63,13 @@ const systemRoutes: RouteRecordRaw[] = [
 const asyncRoutes: Route.recordMainRaw[] = [
   {
     meta: {
-      title: '演示',
+      title: '主导航',
       icon: 'i-uim:box',
     },
     children: [
-      MultilevelMenuExample,
+      score_management,
+      course_management,
+      employment_management,
     ],
   },
 ]
