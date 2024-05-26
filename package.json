@@ -32,6 +32,7 @@
     "defu": "^6.1.4",
     "element-plus": "^2.7.1",
     "eruda": "^3.0.1",
+    "fastify": "^4.27.0",
     "floating-vue": "5.2.2",
     "hotkeys-js": "^3.13.7",
     "lodash-es": "^4.17.21",

@@ -11,7 +11,9 @@ export default defineFakeRoute([
         status: 1,
         data: Mock.mock({
           account: body.account,
-          token: `${body.account}_@string`,
+          stu_id: '2016551204',
+          // token: `${body.account}_@string`,
+          token: `${body.account}`,
           avatar: '',
         }),
       }
