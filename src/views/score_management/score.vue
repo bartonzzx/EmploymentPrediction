@@ -4,9 +4,19 @@ meta:
 </route>
 
 <script setup lang="ts">
+import api from '@/api'
+
 defineOptions({
   name: 'ScoreManagementScore',
 })
+
+api.get('/score_management/score')
+  .then((res) => {
+    console.log(res)
+  })
+  .catch((error) => {
+    console.error('Error fetching data:', error)
+  })
 </script>
 
 <template>

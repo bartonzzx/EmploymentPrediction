@@ -1,12 +1,22 @@
 <route lang="yaml">
-meta:
-  title: 课程管理
-</route>
+  meta:
+    title: 课程管理
+  </route>
 
 <script setup lang="ts">
+import api from '@/api'
+
 defineOptions({
   name: 'CourseManagementCourse',
 })
+
+api.get('/course_management/course')
+  .then((res) => {
+    console.log(res)
+  })
+  .catch((error) => {
+    console.error('Error fetching data:', error)
+  })
 </script>
 
 <template>
@@ -16,6 +26,6 @@ defineOptions({
   </div>
 </template>
 
-<style lang="scss" scoped>
-// 样式
-</style>
+  <style lang="scss" scoped>
+  // 样式
+  </style>

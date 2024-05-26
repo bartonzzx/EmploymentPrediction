@@ -13,6 +13,7 @@ const useUserStore = defineStore(
     const menuStore = useMenuStore()
 
     const account = ref(localStorage.account ?? '')
+    const stu_id = ref(localStorage.stu_id ?? '')
     const token = ref(localStorage.token ?? '')
     const avatar = ref(localStorage.avatar ?? '')
     const permissions = ref<string[]>([])
@@ -30,18 +31,22 @@ const useUserStore = defineStore(
     }) {
       const res = await apiUser.login(data)
       localStorage.setItem('account', res.data.account)
+      localStorage.setItem('stu_id', res.data.stu_id)
       localStorage.setItem('token', res.data.token)
       localStorage.setItem('avatar', res.data.avatar)
       account.value = res.data.account
+      stu_id.value = res.data.stu_id
       token.value = res.data.token
       avatar.value = res.data.avatar
     }
     // 登出
     async function logout(redirect = router.currentRoute.value.fullPath) {
       localStorage.removeItem('account')
+      localStorage.removeItem('stu_id')
       localStorage.removeItem('token')
       localStorage.removeItem('avatar')
       account.value = ''
+      stu_id.value = ''
       token.value = ''
       avatar.value = ''
       permissions.value = []
@@ -69,6 +74,7 @@ const useUserStore = defineStore(
 
     return {
       account,
+      stu_id,
       token,
       avatar,
       permissions,

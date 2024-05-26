@@ -2,6 +2,7 @@ import process from 'node:process'
 import fastify from 'fastify'
 import type { MySQLPromisePool } from '@fastify/mysql'
 import fastifymysql from '@fastify/mysql'
+import fastifyCors from '@fastify/cors'
 
 // pass promise = true
 declare module 'fastify' {
@@ -15,6 +16,11 @@ const server = fastify({ logger: true })
 server.register(fastifymysql, {
   promise: true,
   connectionString: 'mysql://root:123456@localhost:3306/employmentprediction',
+})
+
+server.register(fastifyCors, {
+  origin: '*', // 允许所有来源
+  methods: ['GET', 'POST'], // 允许的请求方法
 })
 
 // 注册路由
@@ -32,7 +38,7 @@ server.register(fastifymysql, {
 server.get('/score_management/score', async (request, reply) => {
   const db: MySQLPromisePool = server.mysql
   try {
-    const [rows] = await db.query('SELECT * FROM test_score where stu_id="2014550620"')
+    const [rows] = await db.query('SELECT coursename,(case when natureofexam = 1 then "正常考试" when natureofexam = 0.8 then "重考重修" end) as natureofexam,credit,score FROM test_score where stu_id="2014550620"')
     reply.send(rows)
   }
   catch (err) {
@@ -52,7 +58,39 @@ server.get('/course_management/course', async (request, reply) => {
   }
 })
 
+// 分页查询，暂留
+// server.get('/course_management/course', async (request, reply) => {
+//   const db: MySQLPromisePool = server.mysql
+
+//   // 获取分页参数，默认值 page=1, limit=10
+//   const { page = 1, limit = 10 } = request.query as { page?: number, limit?: number }
+//   const offset = (page - 1) * limit
+
+//   try {
+//     // 执行分页查询
+//     const [rows] = await db.query('SELECT * FROM test_course LIMIT ? OFFSET ?', [limit, offset])
+
+//     // 获取总数
+//     const [countResult] = await db.query('SELECT COUNT(*) AS total FROM test_course')
+//     const total = (countResult as any)[0].total
+
+//     // 返回分页结果
+//     reply.send({
+//       data: rows,
+//       pagination: {
+//         total,
+//         page,
+//         limit,
+//         totalPages: Math.ceil(total / limit),
+//       },
+//     })
+//   } catch (err) {
+//     reply.send(err)
+//   }
+// })
+
 // employment_management/ability_evaluation/personal_ability 获取个人能力数据
+// server.post('/employment_management/ability_evaluation/personal_ability')
 
 // employment_management/ability_evaluation/yearly_ability 获取年级能力数据
 
@@ -65,7 +103,7 @@ server.get('/course_management/course', async (request, reply) => {
 // 启动服务器
 async function start() {
   try {
-    await server.listen(3000)
+    await server.listen(3000, '0.0.0.0')
     server.log.info(`Server is running at http://localhost:3000`)
   }
   catch (err) {
