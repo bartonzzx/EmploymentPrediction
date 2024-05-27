@@ -13,7 +13,7 @@ defineOptions({
 
 const userStore = useUserStore()
 
-api.post('/employment_management/employment',{
+api.post('/employment_management/employment_prediction/employment',{
   stu_id: userStore.stu_id
 }).then((res) => {
     console.log(res.data)
