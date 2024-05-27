@@ -50,12 +50,10 @@ onMounted(() => {
   initChart1()
   initChart2()
   initChart3()
-  initChart4()
   window.addEventListener('resize', () => {
     chart1.resize()
     chart2.resize()
     chart3.resize()
-    chart4.resize()
   })
 })
 
@@ -283,45 +281,6 @@ function initChart3() {
   // 传入数据
   chart3.setOption(option)
 }
-function initChart4() {
-  chart4 = Echarts.init(chart4Ref.value)
-  // 配置数据
-  const option = {
-    title: {
-      text: '基础雷达图',
-    },
-    legend: {
-      data: ['预算分配（Allocated Budget）', '实际开销（Actual Spending）'],
-    },
-    radar: {
-      // shape: 'circle',
-      indicator: [
-        { name: '销售（sales）', max: 6500 },
-        { name: '管理（Administration）', max: 16000 },
-        { name: '信息技术（Information Techology）', max: 30000 },
-        { name: '客服（Customer Support）', max: 38000 },
-        { name: '研发（Development）', max: 52000 },
-        { name: '市场（Marketing）', max: 25000 },
-      ],
-    },
-    series: [{
-      name: '预算 vs 开销（Budget vs spending）',
-      type: 'radar',
-      data: [
-        {
-          value: [4200, 3000, 20000, 35000, 50000, 18000],
-          name: '预算分配（Allocated Budget）',
-        },
-        {
-          value: [5000, 14000, 28000, 26000, 42000, 21000],
-          name: '实际开销（Actual Spending）',
-        },
-      ],
-    }],
-  }
-  // 传入数据
-  chart4.setOption(option)
-}
 
 function open(url: string) {
   window.open(url, '_blank')
@@ -330,7 +289,6 @@ function open(url: string) {
 
 <template>
   <div>
-    <Alert />
     <PageHeader title="ECharts">
       <template #content>
         <p>不建议使用第三方封装的组件（如：vue-echarts），因为 ECharts 本身文档和演示 demo 已经很完善且方便了，再使用第三方的组件在使用体验上反而会束手束脚。</p>
@@ -363,11 +321,6 @@ function open(url: string) {
           <div ref="chart3Ref" style="width: 100%; height: 400px;" />
         </PageMain>
       </ElCol>
-      <!-- <ElCol :md="12">
-        <PageMain title="雷达图" style="margin: 10px 0;">
-          <div ref="chart4Ref" style="width: 100%; height: 400px;" />
-        </PageMain>
-      </ElCol> -->
     </ElRow>
   </div>
 </template>
