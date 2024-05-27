@@ -48,7 +48,7 @@ api.interceptors.response.use(
       }
     }
     else {
-      useUserStore().logout()
+      // useUserStore().logout()
       // 错误提示
       Message.error(response.data.error, {
         zIndex: 2000,
