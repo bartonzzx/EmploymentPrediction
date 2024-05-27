@@ -49,6 +49,11 @@ api.interceptors.response.use(
     }
     else {
       // useUserStore().logout()
+      // 错误提示
+      Message.error(response.data.error, {
+        zIndex: 2000,
+      })
+      return Promise.reject(response.data)
     }
     return Promise.resolve(response.data)
   },

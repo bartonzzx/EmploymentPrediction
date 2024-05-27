@@ -4,9 +4,24 @@ meta:
 </route>
 
 <script setup lang="ts">
+import api from '@/api'
+import useUserStore from '@/store/modules/user'
+
 defineOptions({
   name: 'EmploymentManagementEmploymentPredictionEmployment',
 })
+
+const userStore = useUserStore()
+
+api.post('/employment_management/employment',{
+  stu_id: userStore.stu_id
+}).then((res) => {
+    console.log(res.data)
+  })
+  .catch((error) => {
+    console.error('Error fetching data:', error)
+  })
+
 </script>
 
 <template>

@@ -12,7 +12,7 @@ defineOptions({
 
 api.get('/course_management/course')
   .then((res) => {
-    console.log(res)
+    console.log(res.data)
   })
   .catch((error) => {
     console.error('Error fetching data:', error)
