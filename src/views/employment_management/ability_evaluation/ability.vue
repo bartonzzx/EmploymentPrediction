@@ -41,11 +41,9 @@ import echarts from 'echarts/types/dist/echarts.js';
   const chart1Ref = ref()
   const chart2Ref = ref()
   const chart3Ref = ref()
-  const chart4Ref = ref()
   let chart1: any
   let chart2: any
   let chart3: any
-  let chart4: any
 
   onMounted(() => {
     initChart1()
