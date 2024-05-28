@@ -3,7 +3,7 @@
     :data="filteredData"
     stripe
     style="width: 100%;"
-    :default-sort="{ prop: 'date', order: 'descending' }"
+    :default-sort="{ prop: 'coursename', order: 'ascending' }"
     :row-class-name="rowClassName"
   >
     <el-table-column prop="coursename" label="课程名" min-width="150"></el-table-column>

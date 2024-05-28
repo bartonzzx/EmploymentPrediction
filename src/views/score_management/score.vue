@@ -58,10 +58,9 @@ const handleSearch = () => {
 
 <template>
   <el-table
-    :data="filteredData"
-    stripe
+    :data="tableData"
     style="width: 100%;"
-    :default-sort="{ prop: 'date', order: 'descending' }"
+    :default-sort="{ prop: 'coursename', order: 'ascending' }"
     :row-class-name="rowClassName"
   >
     <el-table-column prop="coursename" label="课程名" min-width="100"></el-table-column>
@@ -110,16 +109,26 @@ const handleSearch = () => {
   }
 }
 
-const rowClassName = ({ row }) => {
-  console.log("Row Score:", row.score); // 添加调试语句
-  return Number(row.score) < 60 ? 'row-red' : '';
+const rowClassName = ({ row , rowIndex }) => {
+  // console.log("Row Score:", row.score); // 添加调试语句
+  // return Number(row.score) < 60 ? 'row-red' : '';
+  if(Number(row.score) < 60) return 'unaccept';
+  else if(Number(row.score >= 80)) return 'accept';
+  else return 'warning';
 }
 </script>
 
-<style lang="scss" scoped>
-.el-table__row.row-red {
-  color: white; // 如果需要文字也变成白色
-  background-color: red;
+<style>
+.el-table .unaccept {
+  background-color: rgb(253 232 230);
+}
+
+.el-table .warning {
+  background-color: oldlace;
+}
+
+.el-table .accept {
+  background-color: #f0f9eb;
 }
 </style>
 

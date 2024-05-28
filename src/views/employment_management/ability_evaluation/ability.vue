@@ -45,6 +45,25 @@ import echarts from 'echarts/types/dist/echarts.js';
   let chart2: any
   let chart3: any
 
+  var schema = [
+  { name: '工程知识', index: 0},
+  { name: '问题分析', index: 1},
+  { name: '设计/开发解决方案', index: 2},
+  { name: '研究', index: 3},
+  { name: '使用现代工具', index: 4},
+  { name: '工程与社会', index: 5},
+  { name: '环境和可持续发展', index: 6},
+  { name: '职业规范', index: 7},
+  { name: '个人和团队', index: 8},
+  { name: '沟通', index: 9 },
+  { name: '项目管理', index: 10},
+  { name: '终身学习', index: 11}
+];
+  // var lineStyle = {
+  //    width: 0.5,
+  //    opacity: 2
+  //  }
+
   onMounted(() => {
     initChart1()
     initChart2()
@@ -60,12 +79,13 @@ import echarts from 'echarts/types/dist/echarts.js';
     chart1 = Echarts.init(chart1Ref.value)
     // 配置数据
     const option = {
+      backgroundColor: '#F5F5F5',
         tooltip:{
           trigger:'axis'
         },
-        title: {
-          text: '能力图'
-        },
+        // title: {
+        //   text: '能力图'
+        // },
         legend: {
           data: ['本人', '同级平均','历史平均']
         },
@@ -138,12 +158,13 @@ import echarts from 'echarts/types/dist/echarts.js';
     chart2 = Echarts.init(chart2Ref.value)
     // 配置数据
     const option = {
+      backgroundColor: '#F5F5F5',
         tooltip:{
           trigger:'axis'
         },
-        title: {
-          text: '能力图'
-        },
+        // title: {
+        //   text: '能力图'
+        // },
         legend: {
           data: ['本人', '同级平均','历史平均']
         },
@@ -212,46 +233,141 @@ import echarts from 'echarts/types/dist/echarts.js';
     // 传入数据
     chart2.setOption(option)
   }
+
+
+
   function initChart3() {
     chart3 = Echarts.init(chart3Ref.value)
     // 配置数据
+    // const indices = {
+    //   name: 0,
+    //   group: 1,
+    //   id: 16
+    // };
     const option = {
-      title: {
-        text: '某站点用户访问来源',
-        subtext: '纯属虚构',
-        left: 'center',
-      },
+      backgroundColor: '#F5F5F5',
       tooltip: {
-        trigger: 'item',
-        formatter: '{a} <br/>{b} : {c} ({d}%)',
+        padding: 10,
+        backgroundColor: '#000',
+        borderColor: '#777',
+        borderWidth: 1
       },
+      title: [
+        {
+          // text: '就业能力统计',
+          left: 0,
+          textStyle: {
+            color: '#fff',
+            fontSize: 20,
+            padding: 25
+          }
+        }
+      ],
       legend: {
-        orient: 'vertical',
-        left: 'left',
-        data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎'],
+        bottom:30,
+        data: ['2014', '2015', '2016', '2017', '2018'],
+        itemGap: 20,
+        textStyle: {
+          color: '#000',
+          // color: '#fff',
+          fontSize: 14
+        }
       },
+      parallelAxis: [
+      { dim: 0, name: schema[0].name, scale: true, nameLocation: 'end' },
+      { dim: 1, name: schema[1].name, scale: true, nameLocation: 'end' },
+      { dim: 2, name: schema[2].name, nameLocation: 'end' },
+      { dim: 3, name: schema[3].name, nameLocation: 'end' },
+      { dim: 4, name: schema[4].name, nameLocation: 'end' },
+      { dim: 5, name: schema[5].name, nameLocation: 'end' },
+      { dim: 6, name: schema[6].name, nameLocation: 'end' },
+      { dim: 7, name: schema[7].name, nameLocation: 'end' },
+      { dim: 8, name: schema[8].name, nameLocation: 'end' },
+      { dim: 9, name: schema[9].name, nameLocation: 'end' },
+      { dim: 10, name: schema[10].name, nameLocation: 'end' },
+      { dim: 11, name: schema[11].name, nameLocation: 'end' }
+      ],
+      parallel: {
+        left: '2%',
+        right: '5%',
+        // top: 150,
+        // height: 300,
+        bottom: 100,
+        // layout: 'vertical',
+        parallelAxisDefault: {
+          nameGap: 20,
+          nameTextStyle: {
+            color: '#101010',
+            fontSize: 14
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#aaa'
+            }
+          },
+          axisTick: {
+            lineStyle: {
+              color: '#777'
+            }
+          },
+          splitLine: {
+            show: false,
+            color: '#000'
+          },
+          axisLabel: {
+            color: '#000'
+          },
+          realtime: false
+        }
+      },
+      animation:false,
       series: [
         {
-          name: '访问来源',
-          type: 'pie',
-          radius: '55%',
-          center: ['50%', '60%'],
-          data: [
-            { value: 335, name: '直接访问' },
-            { value: 310, name: '邮件营销' },
-            { value: 234, name: '联盟广告' },
-            { value: 135, name: '视频广告' },
-            { value: 1548, name: '搜索引擎' },
-          ],
-          emphasis: {
-            itemStyle: {
-              shadowBlur: 10,
-              shadowOffsetX: 0,
-              shadowColor: 'rgba(0, 0, 0, 0.5)',
-            },
-          },
+          data: [[4200, 3000, 20000, 35000, 50000, 18000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000]],
+          name: '2014',
+          Symbol: 'rect',
+          type: 'parallel',
+          lineStyle:{
+            color: 'red'
+          }
         },
-      ],
+        {
+          data:[[ 3000, 20000, 35000, 50000, 18000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,4200]],
+          name: '2015',
+          Symbol: 'rect',
+          type: 'parallel',
+          lineStyle:{
+            color: 'orange'
+          }
+        },
+        {
+          data:[ [ 35000, 50000, 18000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,4200, 3000,20000]],
+          name: '2016',
+          Symbol: 'rect',
+          type: 'parallel',
+          lineStyle:{
+            color: 'yellow'
+          }
+        },
+        {
+          data: [[ 20000, 35000, 50000, 18000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,4200, 3000]],
+          name: '2017',
+          Symbol: 'rect',
+          type: 'parallel',
+          lineStyle:{
+            color: 'yellow'
+          }
+        },
+        {
+          data: [[4200, 3000, 20000, 35000, 50000, 18000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,4200, 3000, 20000]],
+          name: '2018',
+          Symbol: 'rect',
+          type: 'parallel',
+          lineStyle:{
+            color: 'green'
+          }
+        }
+      ]
     }
     // 传入数据
     chart3.setOption(option)
@@ -281,19 +397,19 @@ import echarts from 'echarts/types/dist/echarts.js';
       </PageHeader>
       <ElRow  :gutter="20" style="margin: -10px 10px;">
         <ElCol :md="12">
-          <PageMain title="第一个能力图" style="margin: 10px 0;">
+          <PageMain title="能力图" style="margin: 10px 0;">
             <div ref="chart1Ref" style="width: 100%; height: 400px;" />
           </PageMain>
         </ElCol>
         <ElCol :md="12">
-          <PageMain title="第二个能力图" style="margin: 10px 0;">
+          <PageMain title="能力图" style="margin: 10px 0;">
             <div ref="chart2Ref" style="width: 100%; height: 400px;" />
           </PageMain>
         </ElCol>
       </ElRow>
       <ElRow :gutter="20" style="margin: 0 10px;">
         <ElCol :md="32">
-          <PageMain title="第三个线图" style="margin: 10px 0;">
+          <PageMain title="就业能力统计" style="margin: 10px 0;">
             <div ref="chart3Ref" style="width: 100%; height: 400px;" />
           </PageMain>
         </ElCol>
