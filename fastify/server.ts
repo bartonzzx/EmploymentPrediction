@@ -33,8 +33,6 @@ server.register(fastifyCors, {
 
 // app/route/list 后端获取路由数据
 
-// app/menu/list 基于文件系统路由模式下，后端获取导航菜单数据
-
 // score_management/score 获取个人成绩
 server.post('/score_management/score', async (request, reply) => {
   const db: MySQLPromisePool = server.mysql
@@ -64,11 +62,15 @@ server.post('/score_management/score', async (request, reply) => {
 })
 
 // course_management/course 获取课程与能力对应矩阵
-server.get('/course_management/course', async (request, reply) => {
+server.post('/course_management/course', async (request, reply) => {
   const db: MySQLPromisePool = server.mysql
+  const { stu_id } = request.body as { stu_id: string } // Add type assertion here
 
   try {
-    const [rows] = await db.query(`select * from ${dbconfig.db_course}`)
+    const [rows] = await db.query(
+      `SELECT coursename,(case when re1=0 then '' when re1=0.1 then 'Low' when re1=0.3 then 'Medium' when re1=0.6 then 'High' end) as re1,(case when re2=0 then '' when re2=0.1 then 'Low' when re2=0.3 then 'Medium' when re2=0.6 then 'High' end) as re2,(case when re3=0 then '' when re3=0.1 then 'Low' when re3=0.3 then 'Medium' when re3=0.6 then 'High' end) as re3,(case when re4=0 then '' when re4=0.1 then 'Low' when re4=0.3 then 'Medium' when re4=0.6 then 'High' end) as re4,(case when re5=0 then '' when re5=0.1 then 'Low' when re5=0.3 then 'Medium' when re5=0.6 then 'High' end) as re5,(case when re6=0 then '' when re6=0.1 then 'Low' when re6=0.3 then 'Medium' when re6=0.6 then 'High' end) as re6,(case when re7=0 then '' when re7=0.1 then 'Low' when re7=0.3 then 'Medium' when re7=0.6 then 'High' end) as re7,(case when re8=0 then '' when re8=0.1 then 'Low' when re8=0.3 then 'Medium' when re8=0.6 then 'High' end) as re8,(case when re9=0 then '' when re9=0.1 then 'Low' when re9=0.3 then 'Medium' when re9=0.6 then 'High' end) as re9,(case when re10=0 then '' when re10=0.1 then 'Low' when re10=0.3 then 'Medium' when re10=0.6 then 'High' end) as re10,(case when re11=0 then '' when re11=0.1 then 'Low' when re11=0.3 then 'Medium' when re11=0.6 then 'High' end) as re11,(case when re12=0 then '' when re12=0.1 then 'Low' when re12=0.3 then 'Medium' when re12=0.6 then 'High' end) as re12,score FROM ${dbconfig.db_course} natural join ${dbconfig.db_score} WHERE stu_id = ?`,
+      [stu_id],
+    )
     // 封装返回的数据格式
     const response = {
       status: 1,
