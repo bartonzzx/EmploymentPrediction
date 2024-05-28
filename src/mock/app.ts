@@ -46,6 +46,7 @@ export default defineFakeRoute([
                 meta: {
                   title: '课程管理',
                   icon: 'bxs:book-content',
+                  breadcrumb: false,
                 },
                 children: [
                   {
@@ -69,6 +70,7 @@ export default defineFakeRoute([
                 meta: {
                   title: '就业管理',
                   icon: 'ep:avatar',
+                  breadcrumb: false,
                 },
                 children: [
                   {
@@ -100,7 +102,7 @@ export default defineFakeRoute([
                     name: 'realtime',
                     component: 'employment_management/realtime_evaluation_prediction/realtime.vue',
                     meta: {
-                      title: '就业去向预测',
+                      title: '实时评估和预测',
                     },
                   }],
               },

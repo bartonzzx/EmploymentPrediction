@@ -11,6 +11,7 @@ const routes: RouteRecordRaw = {
   meta: {
     title: '就业管理',
     icon: 'ep:avatar',
+    breadcrumb: false,
   },
   children: [
     {
