@@ -12,61 +12,59 @@
 
   const userStore = useUserStore()
 
-  //个人数据
-  api.post('/employment_management/ability_evaluation/personal_ability',{
+let promises_ability = []
+
+promises_ability.push(api.post('/employment_management/ability_evaluation/personal_ability',{
     stu_id: userStore.stu_id
-  }).then((res) => {
-      console.log(res.data)
-
-    })
-    .catch((error) => {
-      console.error('Error fetching data:', error)
-    })
-
-  //年级平均
-  api.post('/employment_management/ability_evaluation/yearly_avg_ability',{
+  }))
+  promises_ability.push(api.post('/employment_management/ability_evaluation/yearly_avg_ability',{
     year: userStore.stu_id.substring(0,4)
-  }).then((res) => {
-      console.log(res.data)
-    })
-    .catch((error) => {
-      console.error('Error fetching data:', error)
-    })
-  //历史平均
-  api.post('/employment_management/ability_evaluation/yearly_avg_ability',{
+  }))
+  promises_ability.push(api.post('/employment_management/ability_evaluation/yearly_avg_ability',{
     year: 0
-  }).then((res) => {
-      console.log(res.data)
-    })
-    .catch((error) => {
-      console.error('Error fetching data:', error)
-    })
+  }))
 
+Promise.all(promises_ability)
+  .then((responses) => {
+    // console.log(responses[0].data)
+    // 处理每个年份的数据，例如：
+    const personal_ability = responses[0].data.map(obj => Object.values(obj))
+    console.log(personal_ability)
+    const yearly_ability=responses[1].data.map(obj => Object.values(obj))
+    console.log(yearly_ability)
+    const history_ability=responses[2].data.map(obj => Object.values(obj))
+    console.log(history_ability)
+
+    initChart3(data2014,data2015,data2016,data2017,data2018)
+  })
+  .catch((error) => {
+    console.error('Error fetching data:', error)
+  })
 
   // 线图数据
 let year_data = [2014, 2015, 2016, 2017, 2018]
-let promises = []
+let promises_line = []
 
 for (let i = 0; i < year_data.length; i++) {
-  promises.push(api.post('/employment_management/ability_evaluation/yearly_ability', {
+  promises_line.push(api.post('/employment_management/ability_evaluation/yearly_ability', {
     year: year_data[i]
   }))
 }
 
-Promise.all(promises)
+Promise.all(promises_line)
   .then((responses) => {
     // console.log(responses[0].data)
     // 处理每个年份的数据，例如：
     const data2014 = responses[0].data.map(obj => Object.values(obj))
-    console.log(data2014)
+    // console.log(data2014)
     const data2015=responses[1].data.map(obj => Object.values(obj))
-    console.log(data2015)
+    // console.log(data2015)
     const data2016=responses[2].data.map(obj => Object.values(obj))
-    console.log(data2016)
+    // console.log(data2016)
     const data2017=responses[3].data.map(obj => Object.values(obj))
-    console.log(data2017)
+    // console.log(data2017)
     const data2018=responses[4].data.map(obj => Object.values(obj))
-    console.log(data2018)
+    // console.log(data2018)
     initChart3(data2014,data2015,data2016,data2017,data2018)
   })
   .catch((error) => {

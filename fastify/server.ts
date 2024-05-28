@@ -156,7 +156,7 @@ server.post('/employment_management/ability_evaluation/yearly_avg_ability', asyn
 
   try {
     const [rows] = await db.query(
-      `SELECT year,avg_re1,avg_re2,avg_re3,avg_re4,avg_re5,avg_re6,avg_re7,avg_re8,avg_re9,avg_re10,avg_re11,avg_re12 FROM ${dbconfig.db_statistics} WHERE year = ?`,
+      `SELECT avg_re1,avg_re2,avg_re3,avg_re4,avg_re5,avg_re6,avg_re7,avg_re8,avg_re9,avg_re10,avg_re11,avg_re12 FROM ${dbconfig.db_statistics} WHERE year = ?`,
       [year],
     )
     // 封装返回的数据格式
