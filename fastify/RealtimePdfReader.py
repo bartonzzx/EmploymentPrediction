@@ -9,6 +9,7 @@ import pymysql
 from DatabaseInfo import DatabaseInfo
 from Student import Student
 import warnings
+import json
 
 warnings.filterwarnings('ignore')
 
@@ -471,7 +472,7 @@ for i in range(len(predictor)):
     cursor.executemany(sql, data_result_group)
     mydb.commit()
 
-print(response_json)
+print(json.dumps(response_json))
 
 cursor.close()
 mydb.close()

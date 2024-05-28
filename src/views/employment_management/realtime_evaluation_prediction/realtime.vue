@@ -12,28 +12,14 @@ defineOptions({
 
 const userStore = useUserStore()
 
-api.post('/employment_management/ability_evaluation/personal_ability',{
-  stu_id: userStore.stu_id
+api.get('/employment/realtime_evaluation_prediction',{
+  // stu_id: userStore.stu_id
 }).then((res) => {
     console.log(res.data)
   })
   .catch((error) => {
     console.error('Error fetching data:', error)
   })
-
-let year_data=[0,2014,2015,2016,2017,2018]
-
-for(let i=0;i<year_data.length;i++){
-  api.post('/employment_management/ability_evaluation/yearly_ability',{
-  year: year_data[i]
-}).then((res) => {
-    console.log(res.data)
-  })
-  .catch((error) => {
-    console.error('Error fetching data:', error)
-  })
-
-}
 
 import * as Echarts from 'echarts'
 
