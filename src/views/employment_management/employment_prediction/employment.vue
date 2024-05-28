@@ -37,82 +37,42 @@ function initChart3() {
   chart3 = Echarts.init(chart3Ref.value)
   // 配置数据
   const option = {
-    title: {
-      text: '就业预测结果:各类去向的概率'
+    titile:{
+      text:'就业预测结果:各类去向的概率'
     },
-    legend: {
-      padding: 25,
-      data: ['概率'],
-      textStyle: {
-        fontSize: 16
+    tooltip:{
+      trigger:'axis',
+      axisPointer:{
+        type:'shadow'
       }
     },
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow'
-      },
-      formatter: function(params) {
-        var str = params[0].name + '<br>'
-        for (const item of params) {
-          str += '概率' + ' : ' + item.value + '%<br>'
-        }
-        return str
-      }
+    legend:{
+      data:['2011','2012']
     },
     grid: {
-      containLabel: true,
-      left: 20
-    },
-    yAxis: {
-      data: ['三资企业', '其他企业', '升学', '国有企业', '待就业', '自由职业'],
-      inverse: true,
-      axisLine: { show: false },
-      axisTick: { show: false },
-      axisLabel: {
-        margin: 30,
-        fontSize: 14
-      },
-      axisPointer: {
-        label: {
-          show: true,
-          margin: 30
-        }
-      }
+      left: 0,
+      right: '4%',
+      bottom: '15%',
+      containLabel: true
     },
     xAxis: {
-      splitLine: { show: true },
-      axisLabel: { show: true },
-      axisTick: { show: true },
-      axisLine: { show: true }
+      type: 'value',
+      boundaryGap: [0, 0.01]
     },
-    animationDurationUpdate: 500,
+    yAxis: {
+      type: 'category',
+      data: ['Brazil', 'Indonesia', 'USA', 'India', 'China', 'World']
+    },
     series: [
       {
-        name: '概率',
-        id: 'bar1',
-        // label: this.labelSetting,
-        label: {
-          normal: {
-            show: true,
-            formatter: function(params) { // 标签内容
-              return params.value + '%'
-            },
-            position: 'right',
-            fontSize: 16,
-            color: '#cdcdcd'
-          }
-        },
-        symbolRepeat: true,
-        symbolSize: ['80%', '60%'],
-        barCategoryGap: '40%',
-        universalTransition: {
-          enabled: true,
-          delay: function(idx, total) {
-            return (idx / total) * 1000
-          }
-        },
-        data: [44.04, 56.44, 87.48, 61.07, 33.91, 13.17]
+        name: '2011',
+        type: 'bar',
+        data: [18203, 23489, 29034, 104970, 131744, 630230]
+      },
+      {
+        name: '2012',
+        type: 'bar',
+        data: [19325, 23438, 31000, 121594, 134141, 681807]
       }
     ]
   }
