@@ -28,14 +28,17 @@ Promise.all(promises_ability)
   .then((responses) => {
     // console.log(responses[0].data)
     // 处理每个年份的数据，例如：
-    const personal_ability = responses[0].data.map(obj => Object.values(obj))
+    let temp = responses[0].data.map(obj => Object.values(obj))
+    const personal_ability = temp[0]
     console.log(personal_ability)
-    const yearly_ability=responses[1].data.map(obj => Object.values(obj))
+    temp=responses[1].data.map(obj => Object.values(obj))
+    const yearly_ability = temp[0]
     console.log(yearly_ability)
-    const history_ability=responses[2].data.map(obj => Object.values(obj))
+    temp=responses[2].data.map(obj => Object.values(obj))
+    const history_ability = temp[0]
     console.log(history_ability)
-
-    initChart3(data2014,data2015,data2016,data2017,data2018)
+    initChart1(personal_ability,yearly_ability,history_ability)
+    initChart2(personal_ability,yearly_ability,history_ability)
   })
   .catch((error) => {
     console.error('Error fetching data:', error)
@@ -105,8 +108,8 @@ import { min } from 'lodash-es';
   //  }
 
   onMounted(() => {
-    initChart1()
-    initChart2()
+    // initChart1()
+    // initChart2()
     // initChart3()
     window.addEventListener('resize', () => {
       chart1.resize()
@@ -115,7 +118,7 @@ import { min } from 'lodash-es';
     })
   })
 
-  function initChart1() {
+  function initChart1(personal_ability:number [],yearly_ability:number [],history_ability:number []) {
     chart1 = Echarts.init(chart1Ref.value)
     // 配置数据
     const option = {
@@ -126,20 +129,24 @@ import { min } from 'lodash-es';
         // title: {
         //   text: '能力图'
         // },
+        color: [
+          '#F5F5F7',
+          // '#56A3F1',
+          'rgba(255, 145, 124)',
+          '#FFE434'
+        ],
         legend: {
           data: ['本人', '同级平均','历史平均']
         },
         radar: {
           shape: 'circle',
-          raduys: 120,
-          startAngle: 90,
-          splitNumber: 4,
+          splitNumber: 5,
           axisName:{
-            color:'#428BD4'
+            color:'#000000'
           },
           splitArea:{
             areaStyle:{
-              color:['#77EADF', '#26C3BE', '#64AFE9', '#428BD4'],
+              color:['#bda29a', '#77EADF', '#26C3BE', '#64AFE9', '#428BD4'],
               shadowColor:'rgba(0,0,0,0.2)',
               shadowBlur:10
             }
@@ -155,36 +162,48 @@ import { min } from 'lodash-es';
             }
           },
           indicator: [
-            { name: '工程知识', max: 6500 },
-            { name: '问题分析', max: 16000 },
-            { name: '设计/解决问题', max: 30000 },
-            { name: '研究', max: 38000 },
-            { name: '使用现代工具', max: 52000 },
-            { name: '工程与社会', max: 25000 }
+            { name: '工程知识', max: 100, min: 20 },
+            { name: '问题分析', max: 100, min: 20 },
+            { name: '设计/解决问题', max: 100, min: 20 },
+            { name: '研究', max: 100, min: 20 },
+            { name: '使用现代工具', max: 100, min: 20 },
+            { name: '工程与社会', max: 100, min: 20 }
           ]
         },
         series: [
           {
             name: '本人 vs 同级平均 vs 历史平均',
             type: 'radar',
+            emphasis: {
+              lineStyle: {
+                width: 4
+              }
+            },
             tooltip:{
               trigger:'item'
             },
             data: [
               {
-                value: [4200, 3000, 20000, 35000, 50000, 18000],
+                value: personal_ability.slice(0,6),
                 name: '本人',
-                Symbol: 'rect',
-                lineStyle:{
-                  color: 'red'
+                symbol: 'rect',
+                symbolSize: 12,
+                lineStyle: {
+                  type: 'dashed'
+                },
+                label: {
+                  show: true,
+                  formatter: function(params) {
+                    return params.value
+                  }
                 }
               },
               {
-                value: [5000, 14000, 28000, 26000, 42000, 21000],
-                name: '同级平均'
+                value: yearly_ability.slice(0,6),
+                name: '同级平均',
               },
               {
-                value: [4000, 2800, 26000, 42000, 21000,5000],
+                value: history_ability.slice(0,6),
                 name: '历史平均'
               }
             ]
@@ -194,7 +213,7 @@ import { min } from 'lodash-es';
     // 传入数据
     chart1.setOption(option)
   }
-  function initChart2() {
+  function initChart2(personal_ability:number [],yearly_ability:number [],history_ability:number []) {
     chart2 = Echarts.init(chart2Ref.value)
     // 配置数据
     const option = {
@@ -208,17 +227,21 @@ import { min } from 'lodash-es';
         legend: {
           data: ['本人', '同级平均','历史平均']
         },
+        color: [
+          '#F5F5F7',
+          // '#56A3F1',
+          'rgba(255, 145, 124)',
+          '#FFE434'
+        ],
         radar: {
           shape: 'circle',
-          raduys: 120,
-          startAngle: 90,
-          splitNumber: 4,
+          splitNumber: 5,
           axisName:{
-            color:'#428BD4'
+            color:'#000000'
           },
           splitArea:{
             areaStyle:{
-              color:['#77EADF', '#26C3BE', '#64AFE9', '#428BD4'],
+              color:['#bda29a', '#77EADF', '#26C3BE', '#64AFE9', '#428BD4'],
               shadowColor:'rgba(0,0,0,0.2)',
               shadowBlur:10
             }
@@ -234,36 +257,48 @@ import { min } from 'lodash-es';
             }
           },
           indicator: [
-            { name: '1', max: 6500 },
-            { name: '2', max: 16000 },
-            { name: '3', max: 30000 },
-            { name: '4', max: 38000 },
-            { name: '5', max: 52000 },
-            { name: '6', max: 25000 }
+            { name: '环境和可持续发展', max: 100, min: 20 },
+            { name: '职业规范', max: 100, min: 20 },
+            { name: '个人和团队', max: 100, min: 20 },
+            { name: '沟通', max: 100, min: 20 },
+            { name: '项目管理', max: 100, min: 20 },
+            { name: '终身学习', max: 100, min: 20 }
           ]
         },
         series: [
           {
             name: '本人 vs 同级平均 vs 历史平均',
             type: 'radar',
+            emphasis: {
+              lineStyle: {
+                width: 4
+              }
+            },
             tooltip:{
               trigger:'item'
             },
             data: [
               {
-                value: [4200, 3000, 20000, 35000, 50000, 18000],
+                value: personal_ability.slice(6,12),
                 name: '本人',
-                Symbol: 'rect',
-                lineStyle:{
-                  color: 'red'
+                symbol: 'rect',
+                symbolSize: 12,
+                lineStyle: {
+                  type: 'dashed'
+                },
+                label: {
+                  show: true,
+                  formatter: function(params) {
+                    return params.value
+                  }
                 }
               },
               {
-                value: [5000, 14000, 28000, 26000, 42000, 21000],
+                value: yearly_ability.slice(6,12),
                 name: '同级平均'
               },
               {
-                value: [4000, 2800, 26000, 42000, 21000,5000],
+                value: history_ability.slice(6,12),
                 name: '历史平均'
               }
             ]
