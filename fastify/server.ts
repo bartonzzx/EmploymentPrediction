@@ -235,7 +235,7 @@ server.post('/employment_management/employment_prediction/employment', async (re
 server.post('/employment/realtime_evaluation_prediction', async (request, reply) => {
   const { pdfFilePath }: { pdfFilePath: string } = request.body as { pdfFilePath: string }
 
-  const pythonProcess: ChildProcessWithoutNullStreams = spawn('python3', ['path/to/your_script.py', pdfFilePath])
+  const pythonProcess: ChildProcessWithoutNullStreams = spawn('python', ['Python\RealtimeEmploymentPrediction\RealtimePdfReader.py', pdfFilePath])
 
   let output: string = ''
   pythonProcess.stdout.on('data', (data) => {
