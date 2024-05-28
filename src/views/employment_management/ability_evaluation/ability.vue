@@ -12,20 +12,29 @@
 
   const userStore = useUserStore()
 
+  //个人数据
   api.post('/employment_management/ability_evaluation/personal_ability',{
     stu_id: userStore.stu_id
   }).then((res) => {
       console.log(res.data)
+
     })
     .catch((error) => {
       console.error('Error fetching data:', error)
     })
 
-  let year_data=[0,2014,2015,2016,2017,2018]
-
-  for(let i=0;i<year_data.length;i++){
-    api.post('/employment_management/ability_evaluation/yearly_ability',{
-    year: year_data[i]
+  //年级平均
+  api.post('/employment_management/ability_evaluation/yearly_avg_ability',{
+    year: userStore.stu_id.substring(0,4)
+  }).then((res) => {
+      console.log(res.data)
+    })
+    .catch((error) => {
+      console.error('Error fetching data:', error)
+    })
+  //历史平均
+  api.post('/employment_management/ability_evaluation/yearly_avg_ability',{
+    year: 0
   }).then((res) => {
       console.log(res.data)
     })
@@ -33,10 +42,43 @@
       console.error('Error fetching data:', error)
     })
 
-  }
+
+  // 线图数据
+let year_data = [2014, 2015, 2016, 2017, 2018]
+let promises = []
+
+for (let i = 0; i < year_data.length; i++) {
+  promises.push(api.post('/employment_management/ability_evaluation/yearly_ability', {
+    year: year_data[i]
+  }))
+}
+
+Promise.all(promises)
+  .then((responses) => {
+    // console.log(responses[0].data)
+    // 处理每个年份的数据，例如：
+    const data2014 = responses[0].data.map(obj => Object.values(obj))
+    console.log(data2014)
+    const data2015=responses[1].data.map(obj => Object.values(obj))
+    console.log(data2015)
+    const data2016=responses[2].data.map(obj => Object.values(obj))
+    console.log(data2016)
+    const data2017=responses[3].data.map(obj => Object.values(obj))
+    console.log(data2017)
+    const data2018=responses[4].data.map(obj => Object.values(obj))
+    console.log(data2018)
+    initChart3(data2014,data2015,data2016,data2017,data2018)
+  })
+  .catch((error) => {
+    console.error('Error fetching data:', error)
+  })
+
+
+
 
   import * as Echarts from 'echarts'
 import echarts from 'echarts/types/dist/echarts.js';
+import { min } from 'lodash-es';
 
   const chart1Ref = ref()
   const chart2Ref = ref()
@@ -60,14 +102,14 @@ import echarts from 'echarts/types/dist/echarts.js';
   { name: '终身学习', index: 11}
 ];
   // var lineStyle = {
-  //    width: 0.5,
-  //    opacity: 2
+    //  width: 0.5,
+    //  opacity: 2
   //  }
 
   onMounted(() => {
     initChart1()
     initChart2()
-    initChart3()
+    // initChart3()
     window.addEventListener('resize', () => {
       chart1.resize()
       chart2.resize()
@@ -115,12 +157,12 @@ import echarts from 'echarts/types/dist/echarts.js';
             }
           },
           indicator: [
-            { name: '1', max: 6500 },
-            { name: '2', max: 16000 },
-            { name: '3', max: 30000 },
-            { name: '4', max: 38000 },
-            { name: '5', max: 52000 },
-            { name: '6', max: 25000 }
+            { name: '工程知识', max: 6500 },
+            { name: '问题分析', max: 16000 },
+            { name: '设计/解决问题', max: 30000 },
+            { name: '研究', max: 38000 },
+            { name: '使用现代工具', max: 52000 },
+            { name: '工程与社会', max: 25000 }
           ]
         },
         series: [
@@ -236,7 +278,7 @@ import echarts from 'echarts/types/dist/echarts.js';
 
 
 
-  function initChart3() {
+  function initChart3(data2014:number [],data2015:number [],data2016:number [],data2017:number [],data2018:number []) {
     chart3 = Echarts.init(chart3Ref.value)
     // 配置数据
     // const indices = {
@@ -274,18 +316,18 @@ import echarts from 'echarts/types/dist/echarts.js';
         }
       },
       parallelAxis: [
-      { dim: 0, name: schema[0].name, scale: true, nameLocation: 'end' },
-      { dim: 1, name: schema[1].name, scale: true, nameLocation: 'end' },
-      { dim: 2, name: schema[2].name, nameLocation: 'end' },
-      { dim: 3, name: schema[3].name, nameLocation: 'end' },
-      { dim: 4, name: schema[4].name, nameLocation: 'end' },
-      { dim: 5, name: schema[5].name, nameLocation: 'end' },
-      { dim: 6, name: schema[6].name, nameLocation: 'end' },
-      { dim: 7, name: schema[7].name, nameLocation: 'end' },
-      { dim: 8, name: schema[8].name, nameLocation: 'end' },
-      { dim: 9, name: schema[9].name, nameLocation: 'end' },
-      { dim: 10, name: schema[10].name, nameLocation: 'end' },
-      { dim: 11, name: schema[11].name, nameLocation: 'end' }
+      { dim: 0, name: schema[0].name, min:0, max:100 },
+      { dim: 1, name: schema[1].name, min:0, max:100 },
+      { dim: 2, name: schema[2].name, min:0, max:100 },
+      { dim: 3, name: schema[3].name, min:0, max:100 },
+      { dim: 4, name: schema[4].name, min:0, max:100 },
+      { dim: 5, name: schema[5].name, min:0, max:100 },
+      { dim: 6, name: schema[6].name, min:0, max:100 },
+      { dim: 7, name: schema[7].name, min:0, max:100 },
+      { dim: 8, name: schema[8].name, min:0, max:100 },
+      { dim: 9, name: schema[9].name, min:0, max:100 },
+      { dim: 10, name: schema[10].name, min:0, max:100 },
+      { dim: 11, name: schema[11].name, min:0, max:100 }
       ],
       parallel: {
         left: '2%',
@@ -323,47 +365,62 @@ import echarts from 'echarts/types/dist/echarts.js';
       animation:false,
       series: [
         {
-          data: [[4200, 3000, 20000, 35000, 50000, 18000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000]],
+          smooth:true,
+          data: data2014,
           name: '2014',
           Symbol: 'rect',
           type: 'parallel',
           lineStyle:{
-            color: 'red'
+            color: 'red',
+            width: 0.5,
+            opacity: 2,
           }
         },
         {
-          data:[[ 3000, 20000, 35000, 50000, 18000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,4200]],
+          smooth:true,
+          data: data2015,
           name: '2015',
           Symbol: 'rect',
           type: 'parallel',
           lineStyle:{
-            color: 'orange'
+            color: 'orange',
+            width: 0.5,
+            opacity: 2,
           }
         },
         {
-          data:[ [ 35000, 50000, 18000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,4200, 3000,20000]],
+          smooth:true,
+          data: data2016,
           name: '2016',
           Symbol: 'rect',
           type: 'parallel',
           lineStyle:{
+            width: 0.5,
+            opacity: 2,
             color: 'yellow'
           }
         },
         {
-          data: [[ 20000, 35000, 50000, 18000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,4200, 3000]],
+          smooth:true,
+          data: data2017,
           name: '2017',
           Symbol: 'rect',
           type: 'parallel',
           lineStyle:{
+            width: 0.5,
+            opacity: 2,
             color: 'yellow'
           }
         },
         {
-          data: [[4200, 3000, 20000, 35000, 50000, 18000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,4200, 3000, 20000]],
+          smooth:true,
+          data: data2018,
           name: '2018',
           Symbol: 'rect',
           type: 'parallel',
           lineStyle:{
+            width: 0.5,
+            opacity: 2,
             color: 'green'
           }
         }
