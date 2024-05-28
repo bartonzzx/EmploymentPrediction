@@ -147,8 +147,8 @@ server.post('/employment_management/ability_evaluation/personal_ability', async 
     reply.send(errorResponse)
   }
 })
-// employment_management/ability_evaluation/yearly_ability 获取年级能力数据
-server.post('/employment_management/ability_evaluation/yearly_ability', async (request, reply) => {
+// employment_management/ability_evaluation/yearly_avg_ability 获取年级能力数据
+server.post('/employment_management/ability_evaluation/yearly_avg_ability', async (request, reply) => {
   const db: MySQLPromisePool = server.mysql
   const { year } = request.body as { year: number } // Add type assertion here
 
@@ -157,6 +157,33 @@ server.post('/employment_management/ability_evaluation/yearly_ability', async (r
       `SELECT year,avg_re1,avg_re2,avg_re3,avg_re4,avg_re5,avg_re6,avg_re7,avg_re8,avg_re9,avg_re10,avg_re11,avg_re12 FROM ${dbconfig.db_statistics} WHERE year = ?`,
       [year],
     )
+    // 封装返回的数据格式
+    const response = {
+      status: 1,
+      error: '',
+      data: rows,
+    }
+    reply.send(response)
+  }
+  catch (err) {
+    const errorResponse = {
+      status: 0,
+      error: err,
+      data: null,
+    }
+    reply.send(errorResponse)
+  }
+})
+
+// employment_management/ability_evaluation/yearly_ability 获取该年级能力数据
+server.post('/employment_management/ability_evaluation/yearly_ability', async (request, reply) => {
+  const db: MySQLPromisePool = server.mysql
+  const { year } = request.body as { year: number } // Add type assertion here
+
+  try {
+    const [rows] = await db.query(
+      `SELECT x1 as re1,x2 as re2,x3 as re3,x4 as re4,x5 as re5,x6 as re6,x7 as re7,x8 as re8,x9 as re9,x10 as re10,x11 as re11,x12 as re12 FROM ${dbconfig.db_ability} where stu_id like '?%'`,
+      [year])
     // 封装返回的数据格式
     const response = {
       status: 1,
@@ -202,7 +229,6 @@ server.post('/employment_management/employment_prediction/employment', async (re
     reply.send(errorResponse)
   }
 })
-
 // employment_management/realtime_evaluation_prediction/realtime 实时评估个人能力数据
 
 // employment_management/realtime_evaluation_prediction/realtime 实时预测个人就业去向
