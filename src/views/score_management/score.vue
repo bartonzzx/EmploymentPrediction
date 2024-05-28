@@ -64,10 +64,10 @@ const handleSearch = () => {
     :default-sort="{ prop: 'date', order: 'descending' }"
     :row-class-name="rowClassName"
   >
-    <el-table-column prop="coursename" label="课程名" width="300"></el-table-column>
-    <el-table-column prop="natureofexam" label="考试性质" width="300"></el-table-column>
-    <el-table-column prop="credit" label="学分" sortable width="300"></el-table-column>
-    <el-table-column prop="score" label="考试成绩" sortable width="300"></el-table-column>
+    <el-table-column prop="coursename" label="课程名" min-width="300"></el-table-column>
+    <el-table-column prop="natureofexam" label="考试性质" min-width="300"></el-table-column>
+    <el-table-column prop="credit" label="学分" sortable min-width="300"></el-table-column>
+    <el-table-column prop="score" label="考试成绩" sortable min-width="300"></el-table-column>
     <el-table-column align="right">
       <template v-slot:header>
         <el-input v-model="search" size="mini" placeholder="输入关键字搜索" @input="handleSearch"/>

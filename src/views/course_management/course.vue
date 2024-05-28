@@ -6,20 +6,20 @@
     :default-sort="{ prop: 'date', order: 'descending' }"
     :row-class-name="rowClassName"
   >
-    <el-table-column prop="coursename" label="课程名" width="150"></el-table-column>
-    <el-table-column prop="re1" label="工程知识" width="100"></el-table-column>
-    <el-table-column prop="re2" label="问题分析" width="100"></el-table-column>
-    <el-table-column prop="re3" label="设计/开发解决方案" width="100"></el-table-column>
-    <el-table-column prop="re4" label="研究" width="100"></el-table-column>
-    <el-table-column prop="re5" label="使用现代工具" width="100"></el-table-column>
-    <el-table-column prop="re6" label="工程与社会" width="100"></el-table-column>
-    <el-table-column prop="re7" label="环境和可持续发展" width="100"></el-table-column>
-    <el-table-column prop="re8" label="职业规范" width="100"></el-table-column>
-    <el-table-column prop="re9" label="个人和团队" width="100"></el-table-column>
-    <el-table-column prop="re10" label="沟通" width="100"></el-table-column>
-    <el-table-column prop="re11" label="项目管理" width="100"></el-table-column>
-    <el-table-column prop="re12" label="终身学习" width="100"></el-table-column>
-    <el-table-column prop="score" label="考试成绩" width="100"></el-table-column>
+    <el-table-column prop="coursename" label="课程名" min-width="150"></el-table-column>
+    <el-table-column prop="re1" label="工程知识" min-width="100"></el-table-column>
+    <el-table-column prop="re2" label="问题分析" min-width="100"></el-table-column>
+    <el-table-column prop="re3" label="设计/开发解决方案" min-width="100"></el-table-column>
+    <el-table-column prop="re4" label="研究" min-width="100"></el-table-column>
+    <el-table-column prop="re5" label="使用现代工具" min-width="100"></el-table-column>
+    <el-table-column prop="re6" label="工程与社会" min-width="100"></el-table-column>
+    <el-table-column prop="re7" label="环境和可持续发展" min-width="100"></el-table-column>
+    <el-table-column prop="re8" label="职业规范" min-width="100"></el-table-column>
+    <el-table-column prop="re9" label="个人和团队" min-width="100"></el-table-column>
+    <el-table-column prop="re10" label="沟通" min-width="100"></el-table-column>
+    <el-table-column prop="re11" label="项目管理" min-width="100"></el-table-column>
+    <el-table-column prop="re12" label="终身学习" min-width="100"></el-table-column>
+    <el-table-column prop="score" label="考试成绩" min-width  ="100"></el-table-column>
     <!-- <el-table-column align="right">
       <template v-slot:header>
         <el-input v-model="search" size="mini" placeholder="输入关键字搜索" @input="handleSearch"/>
