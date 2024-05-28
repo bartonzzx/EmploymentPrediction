@@ -1,4 +1,6 @@
 import process from 'node:process'
+import type { ChildProcessWithoutNullStreams } from 'node:child_process'
+import { spawn } from 'node:child_process'
 import fastify from 'fastify'
 import type { MySQLPromisePool } from '@fastify/mysql'
 import fastifymysql from '@fastify/mysql'
@@ -230,6 +232,29 @@ server.post('/employment_management/employment_prediction/employment', async (re
   }
 })
 // employment_management/realtime_evaluation_prediction/realtime 实时评估个人能力数据
+server.post('/employment/realtime_evaluation_prediction', async (request, reply) => {
+  const { pdfFilePath }: { pdfFilePath: string } = request.body as { pdfFilePath: string }
+
+  const pythonProcess: ChildProcessWithoutNullStreams = spawn('python3', ['path/to/your_script.py', pdfFilePath])
+
+  let output: string = ''
+  pythonProcess.stdout.on('data', (data) => {
+    output += data.toString()
+  })
+
+  pythonProcess.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`)
+  })
+
+  pythonProcess.on('close', (code) => {
+    if (code === 0) {
+      reply.send({ success: true, output })
+    }
+    else {
+      reply.status(500).send({ success: false, message: 'Python script failed' })
+    }
+  })
+})
 
 // employment_management/realtime_evaluation_prediction/realtime 实时预测个人就业去向
 
