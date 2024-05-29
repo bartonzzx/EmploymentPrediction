@@ -4,7 +4,6 @@ import pdfplumber
 import pandas as pd
 import numpy as np
 import re
-from sqlalchemy import create_engine
 import pymysql
 from DatabaseInfo import DatabaseInfo
 from Student import Student
@@ -346,7 +345,7 @@ try:
     # 创建游标对象
     cursor = mydb.cursor()
 except:
-    exit(-1)
+    sys.exit(-1)
 
 # 添加学生信息
 sql = "insert into {} (stu_id,name,year) values (%s,%s,%s) on duplicate key update name=values(name), year=values(year);".format(
@@ -418,8 +417,7 @@ for stu_id in stu_ids:
         try:
             re_score = sum(stu_id_re_scores['weightsum']) / weight_sum
         except ZeroDivisionError:
-            del students[-1]
-            continue
+            re_score = 0
 
         # 存储数据
         # students[id[0]].scores['re{}'.format(re)] = re_score
@@ -487,7 +485,9 @@ sql = 'delete from {} where stu_id = {}'.format(DatabaseInfo.realtime_student,st
 cursor.execute(sql)
 mydb.commit()
 
+
+
 cursor.close()
 mydb.close()
 
-exit(0)
+sys.exit(0)
