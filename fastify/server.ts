@@ -233,8 +233,6 @@ server.post('/employment_management/employment_prediction/employment', async (re
 })
 // employment_management/realtime_evaluation_prediction/realtime 实时评估个人能力数据
 server.get('/employment/realtime_evaluation_prediction', async (request, reply) => {
-  // const { pdfFilePath }: { pdfFilePath: string } = request.body as { pdfFilePath: string }
-
   const command = 'conda'
   const args = ['run', '-n', 'PythonEnv3.10', 'python', 'RealtimePdfReader.py', 'test.pdf']
 
@@ -255,23 +253,41 @@ server.get('/employment/realtime_evaluation_prediction', async (request, reply) 
     if (code === 0) {
       try {
         const responseJson = JSON.parse(output)
-        reply.send(responseJson)
+        const response = {
+          status: 1,
+          error: '',
+          data: responseJson,
+        }
+        reply.send(response)
       }
       catch (e) {
         console.error('Failed to parse JSON:', e)
-        reply.status(500).send({ success: false, message: 'Failed to parse JSON from Python script' })
+        if (!reply.sent) {
+          const errorResponse = {
+            status: 0,
+            error: 'Failed to parse JSON from Python script',
+            data: null,
+          }
+          reply.send(errorResponse)
+        }
       }
     }
     else {
       console.error(`Python script failed with code ${code}`)
       console.error(`stderr: ${errorOutput}`)
-      reply.status(500).send({ success: false, message: 'Python script failed', error: errorOutput })
+      if (!reply.sent) {
+        const errorResponse = {
+          status: 0,
+          error: `Python script failed${errorOutput}`,
+          data: null,
+        }
+        reply.send(errorResponse)
+      }
     }
   })
-
-  // 在没有响应之前，保持请求打开
   return reply
 })
+
 // employment_management/realtime_evaluation_prediction/realtime 实时预测个人就业去向
 
 // 启动服务器

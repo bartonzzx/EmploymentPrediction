@@ -476,3 +476,5 @@ print(json.dumps(response_json))
 
 cursor.close()
 mydb.close()
+
+exit(0)
