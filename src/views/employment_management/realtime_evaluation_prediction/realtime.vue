@@ -306,12 +306,16 @@ const handleSuccess = (response: any, file: any, fileList: any) => {
 
 <template>
   <div>
-    <PageHeader title="ECharts">
+    <PageHeader title="实时评估和预测">
       <template #content>
-        <p>不建议使用第三方封装的组件（如：vue-echarts），因为 ECharts 本身文档和演示 demo 已经很完善且方便了，再使用第三方的组件在使用体验上反而会束手束脚。</p>
-        <p style="margin-bottom: 0;">
-          安装命令：<ElTag>pnpm add echarts</ElTag>
-        </p>
+        <p>通过读取成绩单pdf数据，应用能力评估方法，并调用模型进行实时预测。</p>
+        <p>使用方法：</p>
+        <p>1.从<a href="https://jwxt.xtu.edu.cn/jsxsd/kscj/to_cjdy">教务系统</a>下载成绩报表</p>
+        <p>2.点击“选择文件”，选中成绩报表</p>
+        <p>3.点击“上传”</p>
+        <!-- <p style="margin-bottom: 0;">
+          Star：<ElTag>test</ElTag>
+        </p> -->
       </template>
       <el-upload
         ref="uploadRef"

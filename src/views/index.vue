@@ -57,110 +57,31 @@ function open(url: string) {
     <PageHeader>
       <template #title>
         <div class="flex items-center gap-4">
-          欢迎使用 Fantastic-admin
+          欢迎使用 就业预测系统
         </div>
       </template>
       <template #content>
         <div class="text-sm/6">
           <div>
-            这是一款<b class="text-emphasis">开箱即用</b>的中后台框架，同时它也经历过数十个真实项目的技术沉淀，确保框架在开发中可落地、可使用、可维护
+            这是一个<b class="text-emphasis">就业预测系统</b>，整个系统分为：成绩管理，课程管理，就业管理。
           </div>
           <div>
-            注：在作者就职过的公司，本框架已在电商、直播、OA、ERP等多个不同领域的中后台系统中应用并稳定运行
+            成绩管理：展示用户成绩。成绩高低用不同颜色区分。
+          </div>
+          <div>
+            课程管理：展示用户所修的全部课程。展示了课程与毕业能力的对应情况，同时显示用户对应的成绩。
+          </div>
+          <div>
+            就业管理：展示根据成绩评估出的用户就业能力和就业预测去向，同时提供通过上传成绩单进行实时评估和预测的功能。
           </div>
         </div>
       </template>
-      <HButton outline @click="open('https://fantastic-admin.github.io')">
-        <SvgIcon name="i-ri:file-text-line" />
-        开发文档
-      </HButton>
-      <HDropdownMenu
-        :items="[
-          [
-            { label: 'Gitee', handle: () => open('https://gitee.com/fantastic-admin/basic') },
-            { label: 'Github', handle: () => open('https://github.com/fantastic-admin/basic') },
-          ],
-        ]"
-      >
-        <HButton class="ml-2">
+        <HButton class="ml-2" @click="open('https://github.com/bartonzzx/EmploymentPrediction')">
           <SvgIcon name="i-ri:code-s-slash-line" />
           代码仓库
-          <SvgIcon name="i-ep:arrow-down" />
         </HButton>
-      </HDropdownMenu>
     </PageHeader>
     <div class="w-full flex flex-col gap-4 px-4 xl:flex-row">
-      <PageMain class="ecology">
-        <template #title>
-          <div class="title-info">
-            <img src="https://cn.vuejs.org/logo.svg">
-            <div>
-              <h1 class="c-[#41b883]">
-                Fantastic-startkit
-              </h1>
-              <h2>一款简单好用的 Vue3 项目启动套件</h2>
-            </div>
-          </div>
-          <div class="ml-auto">
-            <HButton @click="open('https://hooray.github.io/fantastic-startkit')">
-              访问官网
-            </HButton>
-          </div>
-        </template>
-        <ul class="m-0 pr-8 text-size-sm leading-6">
-          <li v-for="item in fantasticStartkitInfo.feature" :key="item">
-            {{ item }}
-          </li>
-        </ul>
-      </PageMain>
-      <PageMain class="ecology">
-        <template #title>
-          <div class="title-info">
-            <img src="https://fantastic-admin.github.io/logo.png">
-            <div>
-              <h1 class="c-[#e60000]">
-                Fantastic-admin
-              </h1>
-              <h2>一款开箱即用的 Vue 中后台管理系统框架</h2>
-            </div>
-          </div>
-          <div class="ml-auto">
-            <HButton @click="open('https://fantastic-admin.github.io')">
-              访问官网
-            </HButton>
-          </div>
-        </template>
-        <ElCarousel trigger="click" indicator-position="none" :interval="5000" height="250px">
-          <ElCarouselItem v-for="(item, index) in fantasticAdminInfo.data" :key="item">
-            <ElImage :src="item" fit="cover" style="width: 100%; height: 250px; margin: auto; cursor: pointer;" @click="fantasticAdminInfo.imageVisible = true; fantasticAdminInfo.index = index" />
-          </ElCarouselItem>
-        </ElCarousel>
-        <ElImageViewer v-if="fantasticAdminInfo.imageVisible" :url-list="fantasticAdminInfo.data" :initial-index="fantasticAdminInfo.index" @close="fantasticAdminInfo.imageVisible = false" />
-      </PageMain>
-      <PageMain class="ecology">
-        <template #title>
-          <div class="title-info">
-            <img src="https://one-step-admin.github.io/logo.png">
-            <div>
-              <h1 class="c-[#67c23a]">
-                One-step-admin
-              </h1>
-              <h2>一款干啥都快人一步的 Vue 中后台系统框架</h2>
-            </div>
-          </div>
-          <div class="ml-auto">
-            <HButton @click="open('https://one-step-admin.github.io')">
-              访问官网
-            </HButton>
-          </div>
-        </template>
-        <ElCarousel trigger="click" indicator-position="none" :interval="5000" height="250px">
-          <ElCarouselItem v-for="(item, index) in oneStepAdminInfo.data" :key="item">
-            <ElImage :src="item" fit="cover" style="width: 100%; height: 250px; margin: auto; cursor: pointer;" @click="oneStepAdminInfo.imageVisible = true; oneStepAdminInfo.index = index" />
-          </ElCarouselItem>
-        </ElCarousel>
-        <ElImageViewer v-if="oneStepAdminInfo.imageVisible" :url-list="oneStepAdminInfo.data" :initial-index="oneStepAdminInfo.index" @close="oneStepAdminInfo.imageVisible = false" />
-      </PageMain>
     </div>
   </div>
 </template>

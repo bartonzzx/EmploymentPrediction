@@ -139,7 +139,7 @@ import { min } from 'lodash-es';
           data: ['本人', '同级平均','历史平均']
         },
         radar: {
-          shape: 'circle',
+          // shape: 'circle',
           splitNumber: 5,
           axisName:{
             color:'#000000'
@@ -234,7 +234,7 @@ import { min } from 'lodash-es';
           '#FFE434'
         ],
         radar: {
-          shape: 'circle',
+          // shape: 'circle',
           splitNumber: 5,
           axisName:{
             color:'#000000'
@@ -333,7 +333,7 @@ import { min } from 'lodash-es';
           left: 0,
           textStyle: {
             color: '#fff',
-            fontSize: 20,
+            fontSize: 22,
             padding: 25
           }
         }
@@ -345,7 +345,7 @@ import { min } from 'lodash-es';
         textStyle: {
           color: '#000',
           // color: '#fff',
-          fontSize: 14
+          fontSize: 16
         }
       },
       parallelAxis: [
@@ -373,7 +373,7 @@ import { min } from 'lodash-es';
           nameGap: 20,
           nameTextStyle: {
             color: '#101010',
-            fontSize: 14
+            fontSize: 16
           },
           axisLine: {
             lineStyle: {
@@ -471,28 +471,28 @@ import { min } from 'lodash-es';
   <template>
     <div>
       <Alert />
-      <PageHeader title="ECharts">
+      <PageHeader title="就业能力评估">
         <template #content>
-          <p>不建议使用第三方封装的组件（如：vue-echarts），因为 ECharts 本身文档和演示 demo 已经很完善且方便了，再使用第三方的组件在使用体验上反而会束手束脚。</p>
-          <p style="margin-bottom: 0;">
-            安装命令：<ElTag>pnpm add echarts</ElTag>
-          </p>
+          <p>综合考虑用户成绩、专业培养方案、课程重要性和考试性质，对用户就业能力进行评估。评估结果为百分制。</p>
+          <p>就业能力分为：工程知识能力，问题分析能力，设计/开发解决方案能力，研究能力，使用现代工具能力，工程与社会，环境和可持续发展，职业规范，个人和团队，沟通能力，项目管理能力，终身学习能力。详情请见专业培养方案。</p>
+          <p>专业培养方案:</p>
+          <p><a href="https://jwxy.xtu.edu.cn/info/1016/1126.htm">2021年计算机科学与技术专业本科人才培养方案</a></p>
+          <p><a href="https://jwxy.xtu.edu.cn/info/1016/1125.htm">2021年网络空间安全专业本科人才培养方案</a></p>
+          <p><a href="https://jwxy.xtu.edu.cn/info/1016/1124.htm">2021年软件工程专业本科人才培养方案</a></p>
+          <p><a href="https://jwxy.xtu.edu.cn/info/1016/1119.htm">历年人才培养方案</a></p>
+          <!-- <p style="margin-bottom: 0;"> -->
+            <!-- Star：<ElTag>test</ElTag> -->
+          <!-- </p> -->
         </template>
-        <ElButton @click="open('https://github.com/apache/echarts')">
-          <template #icon>
-            <SvgIcon name="i-ep:link" />
-          </template>
-          访问 echarts
-        </ElButton>
       </PageHeader>
       <ElRow  :gutter="20" style="margin: -10px 10px;">
         <ElCol :md="12">
-          <PageMain title="能力图" style="margin: 10px 0;">
+          <PageMain title="能力图(1)" style="margin: 10px 0;">
             <div ref="chart1Ref" style="width: 100%; height: 400px;" />
           </PageMain>
         </ElCol>
         <ElCol :md="12">
-          <PageMain title="能力图" style="margin: 10px 0;">
+          <PageMain title="能力图(2)" style="margin: 10px 0;">
             <div ref="chart2Ref" style="width: 100%; height: 400px;" />
           </PageMain>
         </ElCol>
@@ -503,11 +503,6 @@ import { min } from 'lodash-es';
             <div ref="chart3Ref" style="width: 100%; height: 400px;" />
           </PageMain>
         </ElCol>
-        <!-- <ElCol :md="12">
-          <PageMain title="雷达图" style="margin: 10px 0;">
-            <div ref="chart4Ref" style="width: 100%; height: 400px;" />
-          </PageMain>
-        </ElCol> -->
       </ElRow>
     </div>
   </template>
