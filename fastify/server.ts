@@ -1,10 +1,16 @@
 import process from 'node:process'
 import type { ChildProcessWithoutNullStreams } from 'node:child_process'
 import { spawn } from 'node:child_process'
+import path from 'node:path'
+import fs from 'node:fs'
+import type { FastifyReply } from 'fastify'
 import fastify from 'fastify'
 import type { MySQLPromisePool } from '@fastify/mysql'
 import fastifymysql from '@fastify/mysql'
 import fastifyCors from '@fastify/cors'
+import { v4 as uuidv4 } from 'uuid'
+import type { MultipartFile } from '@fastify/multipart'
+import fastifyMultipart from '@fastify/multipart'
 import dbconfig from './db_config'
 
 // pass promise = true
@@ -25,6 +31,8 @@ server.register(fastifyCors, {
   origin: '*', // 允许所有来源
   methods: ['GET', 'POST'], // 允许的请求方法
 })
+
+server.register(fastifyMultipart)
 
 // 注册路由
 // user/login 用户登录
@@ -231,10 +239,39 @@ server.post('/employment_management/employment_prediction/employment', async (re
     reply.send(errorResponse)
   }
 })
-// employment_management/realtime_evaluation_prediction/realtime 实时评估个人能力数据
-server.get('/employment/realtime_evaluation_prediction', async (request, reply) => {
+// employment_management/realtime_evaluation_prediction 实时评估和预测
+server.post('/employment_management/realtime_evaluation_prediction', async (request, reply) => {
+  const data: MultipartFile = await (request as any).file()
+  // 生成唯一 ID
+  const uniqueId = uuidv4()
+  const newFileName = `${uniqueId}.pdf`
+
+  // 保存文件到指定目录
+  const uploadDir = path.join(__dirname, 'uploads')
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir)
+  }
+
+  const filePath = path.join(uploadDir, newFileName)
+
+  await new Promise<void>((resolve, reject) => {
+    const fileStream = fs.createWriteStream(filePath)
+    data.file.pipe(fileStream)
+
+    fileStream.on('finish', () => {
+      resolve()
+      // 处理文件的函数
+      realtime_evaluation_prediction(filePath, reply)
+    })
+
+    fileStream.on('error', reject)
+  })
+  return reply
+})
+
+async function realtime_evaluation_prediction(file_path: string, reply: FastifyReply) {
   const command = 'conda'
-  const args = ['run', '-n', 'PythonEnv3.10', 'python', 'RealtimePdfReader.py', 'test.pdf']
+  const args = ['run', '-n', 'PythonEnv3.10', 'python', 'RealtimePdfReader.py', file_path]
 
   const pythonProcess: ChildProcessWithoutNullStreams = spawn(command, args, { shell: true })
 
@@ -261,7 +298,6 @@ server.get('/employment/realtime_evaluation_prediction', async (request, reply) 
         reply.send(response)
       }
       catch (e) {
-        console.error('Failed to parse JSON:', e)
         if (!reply.sent) {
           const errorResponse = {
             status: 0,
@@ -273,8 +309,6 @@ server.get('/employment/realtime_evaluation_prediction', async (request, reply) 
       }
     }
     else {
-      console.error(`Python script failed with code ${code}`)
-      console.error(`stderr: ${errorOutput}`)
       if (!reply.sent) {
         const errorResponse = {
           status: 0,
@@ -285,10 +319,7 @@ server.get('/employment/realtime_evaluation_prediction', async (request, reply) 
       }
     }
   })
-  return reply
-})
-
-// employment_management/realtime_evaluation_prediction/realtime 实时预测个人就业去向
+}
 
 // 启动服务器
 async function start() {

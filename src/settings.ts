@@ -12,6 +12,7 @@ const globalSettings: Settings.all = {
   },
   toolbar: {
     colorScheme: true,
+    pageReload: true,
   },
   tabbar: {
     enable: true,

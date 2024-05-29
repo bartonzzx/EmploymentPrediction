@@ -23,6 +23,7 @@
     "release": "bumpp"
   },
   "dependencies": {
+    "@fastify/multipart": "^8.2.0",
     "@headlessui/vue": "^1.7.21",
     "@imengyu/vue3-context-menu": "^1.4.1",
     "@vueuse/core": "^10.9.0",

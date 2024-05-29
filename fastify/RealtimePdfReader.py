@@ -424,7 +424,7 @@ for stu_id in stu_ids:
         # 存储数据
         # students[id[0]].scores['re{}'.format(re)] = re_score
         # students[id[0]].courses['re{}'.format(re)] = stu_id_re_coursename
-        students[-1].scores['re{}'.format(re)] = re_score
+        students[-1].scores['re{}'.format(re)] = round(re_score,3)
         students[-1].courses['re{}'.format(re)] = stu_id_re_coursename
 
 response_json = students[-1].scores
@@ -463,7 +463,7 @@ for i in range(len(predictor)):
         [data_to_predict.reset_index(drop=True), pd.DataFrame(prediction_proba[i].reshape(-1, 1), columns=[label])],
         axis=1)
     data_predict_result.append(temp_result)
-    response_json[label] = temp_result[label][0]
+    response_json["result{}".format(i)] = round(temp_result[label][0],3)
 
     data_result_group = [tuple([x[0], label, x[1]]) for x in
                          temp_result.loc[:, ['stu_id', label]].values]
@@ -472,7 +472,20 @@ for i in range(len(predictor)):
     cursor.executemany(sql, data_result_group)
     mydb.commit()
 
+response_json['stu_id']=stu_id
+response_json['name']=name
+
 print(json.dumps(response_json))
+
+sql = 'delete from {} where stu_id = {}'.format(DatabaseInfo.realtime_score,stu_id)
+cursor.execute(sql)
+sql = 'delete from {} where stu_id = {}'.format(DatabaseInfo.realtime_possibility_record,stu_id)
+cursor.execute(sql)
+sql = 'delete from {} where stu_id = {}'.format(DatabaseInfo.realtime_ability,stu_id)
+cursor.execute(sql)
+sql = 'delete from {} where stu_id = {}'.format(DatabaseInfo.realtime_student,stu_id)
+cursor.execute(sql)
+mydb.commit()
 
 cursor.close()
 mydb.close()
