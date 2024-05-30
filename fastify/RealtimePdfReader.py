@@ -328,6 +328,8 @@ for df in table_df_array:
     df.replace("中", 75, inplace=True)
     df.replace("及格", 60, inplace=True)
     df.replace("不及格", 50, inplace=True)
+    df.replace("缺考", 0, inplace=True)
+
 
     df["总成绩"] = df["总成绩"].astype(float, errors='ignore')
 
