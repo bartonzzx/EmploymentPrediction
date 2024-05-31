@@ -4,6 +4,7 @@ import type { RouteRecordRaw } from 'vue-router'
 import course_management from './modules/course_management'
 import score_management from './modules/score_management'
 import employment_management from './modules/employment_management'
+import data_upload from './modules/data_upload'
 import type { Route } from '#/global'
 import useSettingsStore from '@/store/modules/settings'
 
@@ -70,6 +71,7 @@ const asyncRoutes: Route.recordMainRaw[] = [
       score_management,
       course_management,
       employment_management,
+      data_upload,
     ],
   },
 ]
