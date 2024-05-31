@@ -6,6 +6,8 @@ meta:
 <script setup lang="ts">
 import api from '@/api'
 import useUserStore from '@/store/modules/user'
+import { ElMessage } from 'element-plus'
+
 defineOptions({
   name: 'EmploymentManagementAbilityEvaluationAbility',
 })
@@ -39,6 +41,7 @@ const handleSuccess = (response: any, file: any, fileList: any) => {
       initChart3([response.data.result0,response.data.result1,response.data.result2,response.data.result3,response.data.result4,response.data.result5])
       console.log(fileUploaded)
       console.log('文件上传成功！:', response.data);
+      ElMessage.success("信息预测完毕!");
       // 处理上传成功后的逻辑，例如刷新界面
 }
 

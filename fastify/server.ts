@@ -321,6 +321,34 @@ async function realtime_evaluation_prediction(file_path: string, reply: FastifyR
   })
 }
 
+// data_management/delete_all 清空数据库
+server.get('/data_management/delete_all', async (request, reply) => {
+  try {
+    const db: MySQLPromisePool = server.mysql
+    await db.query(`truncate table ${dbconfig.db_score}`)
+    await db.query(`truncate table ${dbconfig.db_course}`)
+    await db.query(`truncate table ${dbconfig.db_ability}`)
+    await db.query(`truncate table ${dbconfig.db_prediction}`)
+    await db.query(`truncate table ${dbconfig.db_statistics}`)
+    await db.query(`truncate table ${dbconfig.db_student}`)
+    // 封装返回的数据格式
+    const response = {
+      status: 1,
+      error: '',
+      data: null,
+    }
+    reply.send(response)
+  }
+  catch (err) {
+    const errorResponse = {
+      status: 0,
+      error: err,
+      data: null,
+    }
+    reply.send(errorResponse)
+  }
+})
+
 // 启动服务器
 async function start() {
   try {

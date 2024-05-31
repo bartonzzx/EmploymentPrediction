@@ -10,6 +10,8 @@ import { ref } from 'vue'
 import Reload from '@/views/reload.vue';
 import { nextTick } from 'vue';
 import { defineComponent } from 'vue';
+import api from '@/api'
+import { ElMessage } from 'element-plus'
 
 defineOptions({
   name: 'DataManagementData',
@@ -27,6 +29,11 @@ const submitUpload1 = () => {
 }
 const submitUpload2 = () => {
   uploadRef2.value!.submit()
+}
+async function delete_all() {
+  api.get('/data_management/delete_all').then((res) => {
+    ElMessage.success(`数据删除成功！`)
+})
 }
 </script>
 
@@ -121,13 +128,15 @@ const submitUpload2 = () => {
           </div>
         </template>
     </el-upload>
+    <div>
     <el-button-group class="ml-4">
         <el-button type="primary">
-          进行数据处理
+          初始化并进行数据处理
         <el-icon class="el-icon--right"><Upload /></el-icon>
         </el-button>
-        <el-button type="primary" :icon="Delete">删除所有数据</el-button>
+        <el-button type="primary" :icon="Delete" @click="delete_all">删除所有数据</el-button>
       </el-button-group>
+    </div>
     </PageHeader>
 
   </div>
