@@ -1,4 +1,4 @@
-class DatabaseInfo:
+class RealtimeDatabaseInfo:
     host = 'localhost'
     port = 3306
     user = 'root'
@@ -27,15 +27,20 @@ class DatabaseInfo:
     # pwd='123456'
     # database='eladmin'
 
-    ability='test_ability'
-    ability_record='test_ability_record'
-    course='test_course'
-    employment='test_employment'
-    possibility_record='test_possibility_record'
-    score='test_score'
-    statistics='test_statistics'
-    statistics_record='test_statistics_record'
-    student='test_student'
+    # ability = 'test_ability'
+    # ability_record = 'test_ability_record'
+    course = 'test_course'
+    # employment = 'test_employment'
+    # possibility_record = 'test_possibility_record'
+    # score = 'test_score'
+    # statistics = 'test_statistics'
+    # statistics_record = 'test_statistics_record'
+    # student = 'test_student'
+
+    realtime_student = 'test_realtime_student'
+    realtime_ability = 'test_realtime_ability'
+    realtime_score = 'test_realtime_score'
+    realtime_possibility_record = 'test_realtime_possibility_record'
 
     def __init__(self):
         pass

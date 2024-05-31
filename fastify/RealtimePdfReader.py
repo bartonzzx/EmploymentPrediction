@@ -5,15 +5,14 @@ import pandas as pd
 import numpy as np
 import re
 import pymysql
-from DatabaseInfo import DatabaseInfo
-from Student import Student
+from RealtimeDatabaseInfo import RealtimeDatabaseInfo
+from RealtimeStudent import RealtimeStudent
 import warnings
 import json
 
 warnings.filterwarnings('ignore')
 
-
-# engine = create_engine('mysql://{}:{}@{}:{}/{}'.format(DatabaseInfo.user,DatabaseInfo.pwd, DatabaseInfo.host, DatabaseInfo.port,DatabaseInfo.database))
+# engine = create_engine('mysql://{}:{}@{}:{}/{}'.format(RealtimeDatabaseInfo.user,RealtimeDatabaseInfo.pwd, RealtimeDatabaseInfo.host, RealtimeDatabaseInfo.port,RealtimeDatabaseInfo.database))
 
 class imclassifier:
     """在不平衡数据集中进行分类预测"""
@@ -342,8 +341,8 @@ for df in table_df_array:
     df['课程名称'] = df['课程名称'].str.replace("\n", "")
 
 try:
-    mydb = pymysql.connect(host=DatabaseInfo.host, user=DatabaseInfo.user, password=DatabaseInfo.pwd,
-                           port=DatabaseInfo.port, database=DatabaseInfo.database)
+    mydb = pymysql.connect(host=RealtimeDatabaseInfo.host, user=RealtimeDatabaseInfo.user, password=RealtimeDatabaseInfo.pwd,
+                           port=RealtimeDatabaseInfo.port, database=RealtimeDatabaseInfo.database)
     # 创建游标对象
     cursor = mydb.cursor()
 except:
@@ -351,7 +350,7 @@ except:
 
 # 添加学生信息
 sql = "insert into {} (stu_id,name,year) values (%s,%s,%s) on duplicate key update name=values(name), year=values(year);".format(
-    DatabaseInfo.realtime_student)
+    RealtimeDatabaseInfo.realtime_student)
 cursor.execute(sql, [stu_id, name, year])
 
 # 添加考试记录
@@ -359,7 +358,7 @@ for df in table_df_array:
     df['学号'] = stu_id
     data_score_group = [tuple(x) for x in df.loc[:, ["学号", "课程名称", "考试性质", "学分", "总成绩"]].values]
     sql = "insert into {} (stu_id,coursename,natureofexam,credit,score) values (%s,%s,%s,%s,%s)".format(
-        DatabaseInfo.realtime_score)
+        RealtimeDatabaseInfo.realtime_score)
     cursor.executemany(sql, data_score_group)
     mydb.commit()
     df.rename(columns={'学号': 'stu_id'}, inplace=True)
@@ -374,16 +373,16 @@ response_json = {}
 course_white_list = ['程序设计实践']
 students = []
 
-sql = "select * from {};".format(DatabaseInfo.course)
+sql = "select * from {};".format(RealtimeDatabaseInfo.course)
 course_dp = pd.read_sql_query(sql, mydb)
 course_dp.set_index("coursename", inplace=True)
 
 stu_ids = [stu_id]
 for stu_id in stu_ids:
-    students.append(Student(stu_id))
+    students.append(RealtimeStudent(stu_id))
 
     sql = "select * from {} where stu_id = {} and coursename in (select coursename from {});".format(
-        DatabaseInfo.realtime_score, stu_id, DatabaseInfo.course)
+        RealtimeDatabaseInfo.realtime_score, stu_id, RealtimeDatabaseInfo.course)
     # 该id全部的成绩数据
     stu_id_all_scores = pd.read_sql_query(sql, mydb)  # 该id全部的成绩数据
 
@@ -431,12 +430,12 @@ response_json = students[-1].scores
 
 data_ability_group = [tuple([x.id] + [*x.scores.values()]) for x in students]
 sql = 'insert into {} (stu_id,x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);'.format(
-    DatabaseInfo.realtime_ability)
+    RealtimeDatabaseInfo.realtime_ability)
 cursor.executemany(sql, data_ability_group)
 mydb.commit()
 
 # 计算并返回预测数据
-sql = 'select * from {} where stu_id = "{}" limit 1'.format(DatabaseInfo.realtime_ability, stu_id)
+sql = 'select * from {} where stu_id = "{}" limit 1'.format(RealtimeDatabaseInfo.realtime_ability, stu_id)
 data_to_predict = pd.read_sql_query(sql, mydb)
 
 imc = joblib.load('imclassifier_model.pkl')
@@ -468,7 +467,7 @@ for i in range(len(predictor)):
     data_result_group = [tuple([x[0], label, x[1]]) for x in
                          temp_result.loc[:, ['stu_id', label]].values]
     sql = "insert into {}(stu_id,natureofunit,possibility) values(%s,%s,%s)".format(
-        DatabaseInfo.realtime_possibility_record)
+        RealtimeDatabaseInfo.realtime_possibility_record)
     cursor.executemany(sql, data_result_group)
     mydb.commit()
 
@@ -477,13 +476,13 @@ response_json['name']=name
 
 print(json.dumps(response_json))
 
-sql = 'delete from {} where stu_id = {}'.format(DatabaseInfo.realtime_score,stu_id)
+sql = 'delete from {} where stu_id = {}'.format(RealtimeDatabaseInfo.realtime_score,stu_id)
 cursor.execute(sql)
-sql = 'delete from {} where stu_id = {}'.format(DatabaseInfo.realtime_possibility_record,stu_id)
+sql = 'delete from {} where stu_id = {}'.format(RealtimeDatabaseInfo.realtime_possibility_record,stu_id)
 cursor.execute(sql)
-sql = 'delete from {} where stu_id = {}'.format(DatabaseInfo.realtime_ability,stu_id)
+sql = 'delete from {} where stu_id = {}'.format(RealtimeDatabaseInfo.realtime_ability,stu_id)
 cursor.execute(sql)
-sql = 'delete from {} where stu_id = {}'.format(DatabaseInfo.realtime_student,stu_id)
+sql = 'delete from {} where stu_id = {}'.format(RealtimeDatabaseInfo.realtime_student,stu_id)
 cursor.execute(sql)
 mydb.commit()
 
