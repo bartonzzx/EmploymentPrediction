@@ -48,11 +48,24 @@ async function init() {
     <PageHeader>
       <template #title>
         <div class="flex items-center gap-4">
-          数据上传
+          数据管理
         </div>
       </template>
       <template #content>
         <div class="text-sm/6">
+          <div>
+            使用步骤：
+          </div>
+          <div>
+            1.上传数据（已提前上传完毕）
+          </div>
+          <div>
+            2.点击“初始化并进行数据处理”，根据上传的数据进行数据库初始化和数据处理
+          </div>
+          <div>
+            3.若需清空数据库，点击删除所有数据
+          </div>
+          <br>
           <div>
             需要上传的数据有：成绩列表，毕业生去向表，课程与毕业能力对应矩阵（培养方案）
           </div>
