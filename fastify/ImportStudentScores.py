@@ -23,7 +23,7 @@ except:
 
 # 获取python文件所在目录，并作为根目录
 # root_dir = os.path.dirname(__file__)
-root_dir = ("数据整理/计网院/计网院 成绩列表/")
+root_dir = ("成绩列表/")
 excel_files = [f for f in os.listdir(root_dir) if (f.endswith(".xls") or f.endswith(".xlsx"))]
 
 data_frames = {}

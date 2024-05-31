@@ -130,7 +130,7 @@ import { min } from 'lodash-es';
         //   text: '能力图'
         // },
         color: [
-          '#F5F5F7',
+          '#00FF00',
           // '#56A3F1',
           'rgba(255, 145, 124)',
           '#FFE434'
@@ -228,7 +228,7 @@ import { min } from 'lodash-es';
           data: ['本人', '同级平均','历史平均']
         },
         color: [
-          '#F5F5F7',
+          '#00FF00',
           // '#56A3F1',
           'rgba(255, 145, 124)',
           '#FFE434'

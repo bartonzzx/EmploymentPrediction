@@ -58,7 +58,7 @@ const handleSearch = () => {
 
 <template>
   <el-table
-    :data="tableData"
+    :data="filteredData"
     style="width: 100%;"
     :default-sort="{ prop: 'coursename', order: 'ascending' }"
     :row-class-name="rowClassName"
