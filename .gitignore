@@ -9,3 +9,6 @@ dist-ssr
 Prediction_Test.py
 uploads
 fastify/RealtimePdfReader.py
+/fastify/培养方案
+/fastify/毕业去向
+/fastify/成绩列表

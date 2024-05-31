@@ -35,6 +35,12 @@ async function delete_all() {
     ElMessage.success(`数据删除成功！`)
 })
 }
+async function init() {
+  api.get('/data_management/init').then((res) => {
+    ElMessage.success(`数据库初始化、数据分析请求已提交！`)
+})
+}
+
 </script>
 
 <template>
@@ -130,7 +136,7 @@ async function delete_all() {
     </el-upload>
     <div>
     <el-button-group class="ml-4">
-        <el-button type="primary">
+        <el-button type="primary" @click="init">
           初始化并进行数据处理
         <el-icon class="el-icon--right"><Upload /></el-icon>
         </el-button>

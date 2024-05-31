@@ -349,6 +349,30 @@ server.get('/data_management/delete_all', async (request, reply) => {
   }
 })
 
+// data_management/init 数据库初始化和数据分析
+server.get('/data_management/init', async (request, reply) => {
+  try {
+    const command = 'conda'
+    const args = ['run', '-n', 'PythonEnv3.10', 'python', 'Pipeline.py']
+    spawn(command, args, { shell: true })
+    // 封装返回的数据格式
+    const response = {
+      status: 1,
+      error: '',
+      data: null,
+    }
+    reply.send(response)
+  }
+  catch (err) {
+    const errorResponse = {
+      status: 0,
+      error: err,
+      data: null,
+    }
+    reply.send(errorResponse)
+  }
+})
+
 // 启动服务器
 async function start() {
   try {
