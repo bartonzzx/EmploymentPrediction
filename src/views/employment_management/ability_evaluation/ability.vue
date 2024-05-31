@@ -122,7 +122,7 @@ import { min } from 'lodash-es';
     chart1 = Echarts.init(chart1Ref.value)
     // 配置数据
     const option = {
-      backgroundColor: '#F5F5F5',
+      backgroundColor: '#FFFFFF',
         tooltip:{
           trigger:'axis'
         },
@@ -130,7 +130,7 @@ import { min } from 'lodash-es';
         //   text: '能力图'
         // },
         color: [
-          '#00FF00',
+          '#F5F5F7',
           // '#56A3F1',
           'rgba(255, 145, 124)',
           '#FFE434'
@@ -217,7 +217,7 @@ import { min } from 'lodash-es';
     chart2 = Echarts.init(chart2Ref.value)
     // 配置数据
     const option = {
-      backgroundColor: '#F5F5F5',
+      backgroundColor: '#FFFFFF',
         tooltip:{
           trigger:'axis'
         },
@@ -228,7 +228,7 @@ import { min } from 'lodash-es';
           data: ['本人', '同级平均','历史平均']
         },
         color: [
-          '#00FF00',
+          '#F5F5F7',
           // '#56A3F1',
           'rgba(255, 145, 124)',
           '#FFE434'
@@ -320,7 +320,7 @@ import { min } from 'lodash-es';
     //   id: 16
     // };
     const option = {
-      backgroundColor: '#F5F5F5',
+      backgroundColor: '#FFFFFF',
       tooltip: {
         padding: 10,
         backgroundColor: '#000',

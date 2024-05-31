@@ -76,7 +76,7 @@ const handleSuccess = (response: any, file: any, fileList: any) => {
     chart1 = Echarts.init(chart1Ref.value)
     // 配置数据
     const option = {
-      backgroundColor: '#F5F5F5',
+      backgroundColor: '#FFFFFF',
         tooltip:{
           trigger:'axis'
         },
@@ -167,7 +167,7 @@ const handleSuccess = (response: any, file: any, fileList: any) => {
     chart2 = Echarts.init(chart2Ref.value)
     // 配置数据
     const option = {
-      backgroundColor: '#F5F5F5',
+      backgroundColor: '#FFFFFF',
         tooltip:{
           trigger:'axis'
         },
@@ -343,12 +343,12 @@ const handleSuccess = (response: any, file: any, fileList: any) => {
     </PageHeader>
     <ElRow  :gutter="20" style="margin: -10px 10px;">
         <ElCol :md="12">
-          <PageMain title="能力图" style="margin: 10px 0;">
+          <PageMain title="能力图(1)" style="margin: 10px 0;">
             <div ref="chart1Ref" style="width: 100%; height: 400px;" />
           </PageMain>
         </ElCol>
         <ElCol :md="12">
-          <PageMain title="能力图" style="margin: 10px 0;">
+          <PageMain title="能力图(2)" style="margin: 10px 0;">
             <div ref="chart2Ref" style="width: 100%; height: 400px;" />
           </PageMain>
         </ElCol>
