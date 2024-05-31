@@ -121,16 +121,15 @@ const submitUpload2 = () => {
           </div>
         </template>
     </el-upload>
-    </PageHeader>
-    <div class="w-full flex flex-col gap-4 px-4 xl:flex-row">
-      <el-button-group class="ml-4">
+    <el-button-group class="ml-4">
         <el-button type="primary">
           进行数据处理
         <el-icon class="el-icon--right"><Upload /></el-icon>
         </el-button>
         <el-button type="primary" :icon="Delete">删除所有数据</el-button>
       </el-button-group>
-    </div>
+    </PageHeader>
+
   </div>
 </template>
 
