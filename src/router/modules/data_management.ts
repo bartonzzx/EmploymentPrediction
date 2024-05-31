@@ -5,24 +5,24 @@ function Layout() {
 }
 
 const routes: RouteRecordRaw = {
-  path: '/data_upload',
+  path: '/data_management',
   component: Layout,
-  redirect: '/data_upload/upload',
-  name: 'upload',
+  redirect: '/data_management/data',
+  name: 'data',
   meta: {
-    title: '数据上传',
+    title: '数据管理',
     icon: 'heroicons:arrow-up-tray-16-solid',
   },
   children: [
     {
-      path: 'upload',
-      name: 'upload',
-      component: () => import('@/views/data_upload/upload.vue'),
+      path: 'data',
+      name: 'data',
+      component: () => import('@/views/data_management/data.vue'),
       meta: {
         title: '数据上传',
         menu: false,
         breadcrumb: false,
-        activeMenu: '/data_upload',
+        activeMenu: '/data_management',
       },
     },
   ],
