@@ -2,6 +2,9 @@ import pymysql
 from Student import Student
 import pandas as pd
 from DatabaseInfo import DatabaseInfo
+import warnings
+
+warnings.filterwarnings('ignore')
 
 course_white_list = ['程序设计实践']
 
@@ -89,7 +92,7 @@ for stu_id in stu_ids:
         students[-1].scores['re{}'.format(re)] = re_score
         students[-1].courses['re{}'.format(re)] = stu_id_re_coursename
 
-        print("graduation req{}:".format(re),re_score)
+        # print("graduation req{}:".format(re),re_score)
 
 data_ability_record_group=[]
 for x in students:
@@ -97,8 +100,8 @@ for x in students:
         data_ability_record_temp=tuple([x.id]+[key]+[values])
         data_ability_record_group.append(data_ability_record_temp)
 data_ability_group = [tuple([x.id] + [*x.scores.values()] + [x.natureofunit] + [x.workplace]) for x in students]
-sql = "insert into {} (stu_id,re,value) values (%s,%s,%s);".format(DatabaseInfo.ability_record)
-cursor.executemany(sql,data_ability_record_group)
+# sql = "insert into {} (stu_id,re,value) values (%s,%s,%s);".format(DatabaseInfo.ability_record)
+# cursor.executemany(sql,data_ability_record_group)
 sql = 'insert into {} (stu_id,x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,y1,y2) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);'.format(DatabaseInfo.ability)
 cursor.executemany(sql,data_ability_group)
 mydb.commit()

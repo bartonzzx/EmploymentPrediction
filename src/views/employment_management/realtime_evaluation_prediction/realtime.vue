@@ -326,7 +326,7 @@ const handleSuccess = (response: any, file: any, fileList: any) => {
         limit=1
         class="upload-demo"
         header=""
-        action="http://172.16.194.137:3000/employment_management/realtime_evaluation_prediction"
+        action="http://172.16.194.36:3000/employment_management/realtime_evaluation_prediction"
         :auto-upload="false"
         :on-success="handleSuccess">
         <template #trigger>

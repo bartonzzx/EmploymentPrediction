@@ -14,5 +14,10 @@ subprocess.run(['python', 'ImportEmploymentInfo.py'])
 subprocess.run(['python', 'DataReduction.py'])
 
 subprocess.run(['python', 'DataPreparation.py'])
+print("data preparation")
 
 subprocess.run(['python', 'DataAnalyse.py'])
+print("data analyse")
+
+subprocess.run(['python', 'Prediction_Test.py'])
+print("prediciotn test")
