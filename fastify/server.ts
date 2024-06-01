@@ -326,11 +326,11 @@ server.get('/data_management/delete_all', async (request, reply) => {
   try {
     const db: MySQLPromisePool = server.mysql
     await db.query(`truncate table ${dbconfig.db_score}`)
-    await db.query(`truncate table ${dbconfig.db_course}`)
-    await db.query(`truncate table ${dbconfig.db_ability}`)
     await db.query(`truncate table ${dbconfig.db_prediction}`)
     await db.query(`truncate table ${dbconfig.db_statistics}`)
-    await db.query(`truncate table ${dbconfig.db_student}`)
+    await db.query(`truncate table ${dbconfig.db_ability}`)
+    // await db.query(`truncate table ${dbconfig.db_student}`)
+    // await db.query(`truncate table ${dbconfig.db_course}`)
     // 封装返回的数据格式
     const response = {
       status: 1,

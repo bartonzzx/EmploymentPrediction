@@ -31,13 +31,14 @@ const submitUpload2 = () => {
   uploadRef2.value!.submit()
 }
 async function delete_all() {
+  ElMessage.success(`数据删除请求已发送！`)
   api.get('/data_management/delete_all').then((res) => {
     ElMessage.success(`数据删除成功！`)
 })
 }
 async function init() {
   api.get('/data_management/init').then((res) => {
-    ElMessage.success(`数据库初始化、数据分析请求已提交！`)
+    ElMessage.success(`数据库初始化、数据分析请求已发送！`)
 })
 }
 
@@ -131,7 +132,7 @@ async function init() {
         accept=".xls, .xlsx"
         class="upload-demo"
         header=""
-        action="http://172.16.194.137:3000/employment_management/realtime_evaluation_prediction"
+        action="http://172.16.194.36:3000/employment_management/realtime_evaluation_prediction"
         :auto-upload="false">
         <template #trigger>
           <el-button type="primary">选择课程与毕业能力对应矩阵</el-button>
