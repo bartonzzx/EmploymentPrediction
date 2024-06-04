@@ -12,3 +12,4 @@ fastify/RealtimePdfReader.py
 /fastify/培养方案
 /fastify/毕业去向
 /fastify/成绩列表
+fastify/imclassifier_model.pkl
